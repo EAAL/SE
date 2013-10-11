@@ -29,32 +29,16 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-var routes = {
-	'/': {
-		method: 'get',
-		func: function (req, res) {
-
-		}
-	},
-	'/asd': {
-		method: 'post',
-		func: function (req, res) {
-
-		}
-	}
-}
-
-
-for (var f in routes) {
-	app[routes[f].method](f, routes[f].func);
-}
-
 app.get('/:username', function(req, res) {
 	res.send(req.params.username);
 });
 
 app.post('/create', function(req, res) {
 	res.send(req.body.invited + ' ' + req.body.date);
+});
+
+app.get('/', function(req, res) {
+	res.render('create');
 });
 
 http.createServer(app).listen(app.get('port'), function(){

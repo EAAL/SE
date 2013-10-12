@@ -8,6 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var domain = require('./domain');
 
 var app = express();
 
@@ -29,15 +30,28 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/:username', function(req, res) {
+app.get('/:username', function (req, res) {
 	res.send(req.params.username);
 });
 
 app.post('/create', function(req, res) {
-	res.send(req.body.invited + ' ' + req.body.date);
+	var dates=[];
+	//var invited[];
+	var req_dates = req.body.date.split(",");
+	var req_invited = req.body.invited.split(",");
+
+	//console.log(req_dates);
+	for (date in req_dates){
+
+		var temp = {};
+		var a = req_dates[date].split(" ");
+		temp.time = a[1];
+		temp.date = a[0];
+		dates.push(temp);
+	}
 });
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
 	res.render('create');
 });
 

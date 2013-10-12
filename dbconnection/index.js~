@@ -1,5 +1,5 @@
 var mongojs= require('mongojs')
 var config=require('./config')
-var db=mongojs(config.dbname)
-exports.module=db
+var db=mongojs(config.dbname,['events','users'])
+module.exports=db
 

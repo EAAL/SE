@@ -4,6 +4,6 @@ module.exports = new function () {
 		var event ={}
 		event.dates=dates
 		event.invited=invited
-		data.saveEvent(event)
+		data.save(event)
 	}
 }

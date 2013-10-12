@@ -8,7 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var domain = require('./domain');
+var domain = require('./domain/create_event');
 
 var app = express();
 
@@ -37,10 +37,10 @@ app.get('/:username', function (req, res) {
 app.post('/create', function(req, res) {
 	var dates=[];
 	//var invited[];
-	var req_dates = req.body.date.split(",");
-	var req_invited = req.body.invited.split(",");
+	var req_dates = req.body.date.split(/[,;]/g);
+	var req_invited = req.body.invited.split(/[,;]/g);
 
-	//console.log(req_dates);
+	console.log(req_dates);
 	for (date in req_dates){
 
 		var temp = {};
@@ -49,6 +49,8 @@ app.post('/create', function(req, res) {
 		temp.date = a[0];
 		dates.push(temp);
 	}
+	domain.create(dates , req_invited);
+	res.send("با موفقیت ثبت شد");
 });
 
 app.get('/', function (req, res) {

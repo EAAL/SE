@@ -34,7 +34,14 @@ app.get('/:username', function (req, res) {
 	res.send(req.params.username);
 });
 
-app.post('/create', function(req, res) {
+function require_login(req, res, next) {
+    //if (req.isAuthenticated()) {
+        return next();
+    //}
+    //res.redirect('/login')
+}
+
+app.post('/create', require_login, function(req, res) {
 	var dates=[];
 	//var invited[];
 	var req_dates = req.body.date.split(/[,;]/g);

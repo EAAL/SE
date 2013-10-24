@@ -41,29 +41,18 @@ function require_login(req, res, next) {
     //res.redirect('/login')
 }
 
-app.post('/create', require_login, function(req, res) {
-	var dates=[];
-	//var invited[];
-	var req_dates = req.body.date.split(/[,;]/g);
-	var req_invited = req.body.invited.split(/[,;]/g);
+var routes = require("./routes");
 
-	console.log(req_dates);
-	for (date in req_dates){
-
-		var temp = {};
-		var a = req_dates[date].split(" ");
-		temp.time = a[1];
-		temp.date = a[0];
-		dates.push(temp);
+for (var key in routes) {
+	var v = routes[key];
+	if (v.authenticated) {
+		app[v.method](key, require_login, v.action);
+	}else {
+		app[v.method](key, v.action);
 	}
-	domain.create(dates , req_invited);
-	res.send("با موفقیت ثبت شد");
-});
-
-app.get('/', function (req, res) {
-	res.render('create');
-});
+}
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+

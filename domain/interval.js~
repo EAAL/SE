@@ -1,0 +1,19 @@
+Class =require('./Class.js')
+var Interval=Class.extend({
+	constructor:function(){
+		this.votes=[];
+	},
+	allInvitedOk:function{
+		for(var i=0 ; i < votes.length ; i++){
+			if(votes[i].desc != 'yes')return false;
+		}
+		return true;
+	},
+	moreThanHalfOk : function {
+		var numOk = 0;
+		for(var i=0 ; i < votes.lentgh ; i++){
+			if( votes[i].desc == 'yes') numOk ++;
+		}
+		if (numOk)
+	}
+});

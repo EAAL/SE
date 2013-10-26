@@ -4,4 +4,9 @@ module.exports = new function(){
 			return false;
 		return true;
 	}
+	this.compare1 = function(a,b){//TODO check
+		if((a.yesVotes+a.maybeVotes)>(b.yesVotes+b.maybeVotes))return 1;
+		if(((a.yesVotes+a.maybeVotes)==(b.yesVotes+b.maybeVotes))&&(a.maybeVotes<b.maybeVotes))return 1;
+		return -1;
+	}
 }

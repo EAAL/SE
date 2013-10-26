@@ -12,7 +12,7 @@ var Room = Class.extend({
 		}
 		else {
 			for (var i = this.reserveTimes.length - 1; i >= 0; i--) {
-				if(overlap(this.reserveTimes[i], time))
+				if(Utils.overlap(this.reserveTimes[i], time))
 					return false;
 			}
 			return true;

@@ -13,4 +13,9 @@ var University = Class.extend({
 			};
 		});
 	}
+	/*retEmptyRoom : function (event){
+		while( retNextProperTime != -1){
+			
+		}
+	}*/
 });

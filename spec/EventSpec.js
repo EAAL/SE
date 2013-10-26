@@ -16,14 +16,18 @@ describe('Event Specs', function (){
 	event1.policy='all';
 	event1.intervals.push(interval1);
 	event1.intervals.push(interval2);
-	it("spec 1 ", function(){
+	/*it("spec 1 ", function(){
 		console.log(interval1);
 		console.log(interval2);
-		expect(event1.specifyProperTime()).toBe('interval1');
-	});
+		expect(event1.sortProperTimes()).toBe('interval1');
+	});*/
 	it("spec 2 " , function(){
-		interval1.votes.push({'desc':'no'});
+		interval1.votes.push({'desc':'yes'});
 		//console.log(event1.intervals[0],0);
-		expect(event1.specifyProperTime()).toBe('interval2');
+		//event1.sortProperTimes();
+		//console.log(event1.stat);
+		//console.log(event1.retNextProperTime());
+		expect(event1.stat[event1.retNextProperTime()].index).toBe('interval1');
+		expect(event1.stat[event1.retNextProperTime()].index).toBe('interval2');
 	});
 });

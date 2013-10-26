@@ -27,7 +27,7 @@ describe('Event Specs', function (){
 		//event1.sortProperTimes();
 		//console.log(event1.stat);
 		//console.log(event1.retNextProperTime());
-		expect(event1.stat[event1.retNextProperTime()].index).toBe('interval1');
-		expect(event1.stat[event1.retNextProperTime()].index).toBe('interval2');
+		expect(event1.stat[event1.retNextProperTime()].interval.id).toBe('interval1');
+		expect(event1.stat[event1.retNextProperTime()].interval.id).toBe('interval2');
 	});
 });

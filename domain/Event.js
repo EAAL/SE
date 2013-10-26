@@ -15,7 +15,7 @@ var Event=Class.extend({
 			if((this.intervals[i].allInvitedOk() == true && this.policy =='all') ||
 			(this.intervals[i].moreThanHalfOk() == true && this.policy == 'half') ||
 			(this.policy == 'max')){
-				this.stat.push( {'index': this.intervals[i].id, 'yesVotes':this.intervals[i].numSpecificVotes('yes'), 'maybeVotes':this.intervals[i].numSpecificVotes('maybe'),
+				this.stat.push( {'interval': this.intervals[i], 'yesVotes':this.intervals[i].numSpecificVotes('yes'), 'maybeVotes':this.intervals[i].numSpecificVotes('maybe'),
 					'noVotes' : this.intervals[i].numSpecificVotes('no')});
 			}
 		}

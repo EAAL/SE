@@ -8,7 +8,7 @@ var Event=Class.extend({
 		this.nextProperIntervalIndex = 'Unknown';
 		this.stat=[];
 		this.startDate='Unknown';
-		this.endDate='';
+		this.endDate='Unknown';
 	},
 	sortProperTimes : function(){
 		for(var i = 0 ; i < this.intervals.length ; i++){

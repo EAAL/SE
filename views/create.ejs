@@ -31,15 +31,25 @@
 			<div class="container">
 				<form class="well col-md" id="create-form" action="create" method="post">
 					<div>
-						<label class="text-right text-primary pull-right">:انتخاب تاریخ</label>
+						<label class="text-right text-primary pull-right">:انتخاب تاریخ <a class="text-danger">*</a></label>
 						<input class="form-control" name="date" type="text" placeholder="yyyy/mm/dd hh:mm,..."></input>
 					</div>
 					<br/>
 					<div>
-						<label class="text-right text-primary pull-right">:دعوت شوندگان</label>
+						<label class="text-right text-primary pull-right">:دعوت شوندگان <a class="text-danger">*</a></label>
 						<input class="form-control" name="invited" type="text" placeholder="sample@example.com,..."></input>
 					</div>
 					<br/>
+					<div>
+						<label class="text-right text-primary pull-right">: تاریخ پایان نظر‌سنجی <a class="text-danger">*</a></label>
+						<input class="form-control" name="dead-line" type="text" placeholder="yyyy/mm/dd hh:mm"></input>
+					</div>
+					</br>
+					<div class="pull-right text-right">
+						<input type="radio" name="numb"/>&nbsp;&nbsp;<strong><lable>تمام دعوعت شدگان</lable></strong>
+						<input type="radio" name="numb"/>&nbsp;&nbsp;<strong><lable>بیشترین گزینه</lable></strong>
+						<input type="radio" name="numb"/>&nbsp;&nbsp;<strong><lable>نصف و بیشتر</lable></strong>
+					</div>
 					<button class="btn btn-small btn-primary" type="submit">ایجاد</button>
 				</form>
 			</div>

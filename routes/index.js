@@ -5,7 +5,6 @@ module.exports = {
 		authenticated: true,
 		action: function (req, res) {
 			var dates=[];
-			//var invited[];
 			var req_dates = req.body.date.split(/[,;]/g);
 			var req_invited = req.body.invited.split(/[,;]/g);
 
@@ -20,6 +19,14 @@ module.exports = {
 			}
 			domain.create(dates , req_invited);
 			res.send("با موفقیت ثبت شد");
+		}
+	},
+	'/admin': {
+		method : 'get',
+		authenticated: false, 
+		action: function (req, res){
+			console.log("man injam\n");
+			res.render('admin');
 		}
 	},
 	'/': {

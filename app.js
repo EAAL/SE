@@ -30,9 +30,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/:username', function (req, res) {
-	res.send(req.params.username);
-});
 
 function require_login(req, res, next) {
     //if (req.isAuthenticated()) {
@@ -51,6 +48,9 @@ for (var key in routes) {
 		app[v.method](key, v.action);
 	}
 }
+app.get('/:username', function (req, res) {
+	res.send(req.params.username);
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

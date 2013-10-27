@@ -1,4 +1,4 @@
-Class = require('./Class.js')
+Class = require('../Utils/Class.js')
 Utils = require('../Utils/Utils.js');
 var Event=Class.extend({
 	constructor : function (){
@@ -19,7 +19,6 @@ var Event=Class.extend({
 		}
 		this.stat.sort(Utils.compare1);
 		this.nextProperIntervalIndex=this.stat.length-1;
-		//console.log('At Event, nextProperIntervalIndex', this.nextProperIntervalIndex);
 	},
 	retNextProperTime : function (){
 		if(this.nextProperIntervalIndex=='Unknown'){
@@ -29,7 +28,6 @@ var Event=Class.extend({
 		else{this.nextProperIntervalIndex-=1;}
 		
 		return this.nextProperIntervalIndex;
-		//TODO return Interval time
 	}
 	
 });

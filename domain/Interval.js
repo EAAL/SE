@@ -1,4 +1,4 @@
-Class =require('./Class.js')
+var Class = require('../Utils/Class.js')
 var Interval=Class.extend({
 	constructor:function(){
 		this.votes=[];

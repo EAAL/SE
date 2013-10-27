@@ -1,4 +1,4 @@
-Class = require('./Class.js')
+Class = require('../Utils/Class.js')
 var University = Class.extend({
 	constructor: function(roomsFileName) {
 		this.rooms = [];
@@ -15,7 +15,7 @@ var University = Class.extend({
 	},
 	findRoomForInterval : function (interval,number){
 		for(var i = 0; i < rooms.length-1 ; i++){
-			if(this.rooms[i].isAvailable((interval.startDate, interval.endDate),number))return i;
+			if(this.rooms[i].isAvailable((interval.startDate, interval.endDate),number)) return i;
 		}
 		return -1;
 	},
@@ -31,3 +31,4 @@ var University = Class.extend({
 		return numRoom;
 	}
 });
+module.exports = University;

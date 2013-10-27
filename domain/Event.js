@@ -1,4 +1,4 @@
-Class = require('./Class.js')
+Class = require('../Utils/Class.js')
 Utils = require('../Utils/Utils.js');
 var Event=Class.extend({
 	constructor : function (){

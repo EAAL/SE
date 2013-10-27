@@ -3,6 +3,7 @@ var Interval=Class.extend({
 	constructor:function(){
 		this.votes=[];
 		//this.start=-1;
+		this.id='Unknown';
 	},
 	allInvitedOk:function(){
 		for(var i=0 ; i < this.votes.length ; i++){

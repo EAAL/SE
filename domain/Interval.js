@@ -4,6 +4,8 @@ var Interval=Class.extend({
 		this.votes=[];
 		//this.start=-1;
 		this.id='Unknown';
+		this.startDate='Unknown';
+		this.endDate='Unknown';
 	},
 	allInvitedOk:function(){
 		for(var i=0 ; i < this.votes.length ; i++){

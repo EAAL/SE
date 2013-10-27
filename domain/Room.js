@@ -22,3 +22,4 @@ var Room = Class.extend({
 		this.reserveTimes.push(time);
 	}
 });
+module. exports = Room

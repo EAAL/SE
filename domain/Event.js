@@ -7,8 +7,6 @@ var Event=Class.extend({
 		this.invited_users=[];
 		this.nextProperIntervalIndex = 'Unknown';
 		this.stat=[];
-		this.startDate='Unknown';
-		this.endDate='Unknown';
 	},
 	sortProperTimes : function(){
 		for(var i = 0 ; i < this.intervals.length ; i++){
@@ -21,6 +19,7 @@ var Event=Class.extend({
 		}
 		this.stat.sort(Utils.compare1);
 		this.nextProperIntervalIndex=this.stat.length-1;
+		//console.log('At Event, nextProperIntervalIndex', this.nextProperIntervalIndex);
 	},
 	retNextProperTime : function (){
 		if(this.nextProperIntervalIndex=='Unknown'){
@@ -28,6 +27,7 @@ var Event=Class.extend({
 			
 		}
 		else{this.nextProperIntervalIndex-=1;}
+		
 		return this.nextProperIntervalIndex;
 		//TODO return Interval time
 	}

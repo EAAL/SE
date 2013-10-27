@@ -13,9 +13,12 @@ var University = Class.extend({
 			};
 		});
 	},
+	constructor : function (){
+		this.rooms = [];
+	},
 	findRoomForInterval : function (interval,number){
-		for(var i = 0; i < rooms.length-1 ; i++){
-			if(this.rooms[i].isAvailable((interval.startDate, interval.endDate),number))return i;
+		for(var i = 0; i < this.rooms.length ; i++){
+			if(this.rooms[i].isAvailable({'start' : interval.startDate, 'end':interval.endDate},number))return i;
 		}
 		return -1;
 	},
@@ -25,9 +28,10 @@ var University = Class.extend({
 		while(true){
 			a= event.retNextProperTime();
 			if(a== -1)return -1;
-			numRoom=findRoomForInterval(event.stat[a].interval, (event.stat[a].yesVotes + event.stat[a].maybeVotes));
+			numRoom=this.findRoomForInterval(event.stat[a].interval, (event.stat[a].yesVotes + event.stat[a].maybeVotes));
 			if(numRoom != -1) break;
 		}
 		return numRoom;
 	}
 });
+module .exports =University

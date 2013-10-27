@@ -1,4 +1,4 @@
-Class= require('./Class.js')
+Class= require('../Utils/Class.js')
 var Vote = Class.extend({
 	constructor : function(){
 		this.desc='Unknown';

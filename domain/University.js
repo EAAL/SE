@@ -1,4 +1,4 @@
-Class = require('./Class.js')
+Class = require('../Utils/Class.js')
 var University = Class.extend({
 	constructor: function(roomsFileName) {
 		this.rooms = [];
@@ -34,4 +34,4 @@ var University = Class.extend({
 		return numRoom;
 	}
 });
-module .exports =University
+module.exports = University;

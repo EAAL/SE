@@ -4,9 +4,9 @@ Utils = require('../Utils/Utils.js');
 Interval = require ('../domain/Interval.js');
 db = require ('../dbconnection');
 describe('Event Specs', function (){
-	var interval1=new Interval();
-	interval1.id='interval1';
-	var interval2=new Interval();
+	var interval1 = new Interval();
+	interval1.id ='interval1';
+	var interval2 = new Interval();
 	interval2.id='interval2';
 	interval1.votes.push({'desc' : 'yes'});
 	interval1.votes.push({'desc':'yes'});
@@ -23,9 +23,12 @@ describe('Event Specs', function (){
 		console.log(interval2);
 		expect(event1.sortProperTimes()).toBe('interval1');
 	});*/
+	
 	it("spec 2 " , function(){
 		db.collection('events').save(event1);
 		interval1.votes.push({'desc':'yes'});
+		db.collection('events').save(event1);
+		db.close();
 		//console.log(event1.intervals[0],0);
 		//event1.sortProperTimes();
 		//console.log(event1.stat);

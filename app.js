@@ -10,6 +10,9 @@ var http = require('http');
 var path = require('path');
 var domain = require('./domain/create_event');
 
+ejs.close = '}}';
+ejs.open = '{{';
+
 var app = express();
 
 // all environments

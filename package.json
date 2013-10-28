@@ -10,6 +10,7 @@
     "ejs": "*",
     "mongojs": "~0.9.6",
     "underscore": "~1.5.2",
-    "emailjs": "~0.3.6"
+    "emailjs": "~0.3.6",
+    "jasmine-node": "~1.11.0"
   }
 }

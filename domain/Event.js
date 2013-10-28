@@ -7,6 +7,7 @@ var Event=Class.extend({
 		this.invited_users=[];
 		this.nextProperIntervalIndex = 'Unknown';
 		this.stat=[];
+		this.eventId='Unknown';
 	},
 	sortProperTimes : function(){
 		for(var i = 0 ; i < this.intervals.length ; i++){

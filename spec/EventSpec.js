@@ -2,6 +2,7 @@ Event = require('../domain/Event.js');
 Vote = require ('../domain/Vote.js');
 Utils = require('../Utils/Utils.js');
 Interval = require ('../domain/Interval.js');
+db = require ('../dbconnection');
 describe('Event Specs', function (){
 	var interval1=new Interval();
 	interval1.id='interval1';
@@ -14,6 +15,7 @@ describe('Event Specs', function (){
 
 	var event1= new Event();
 	event1.policy='all';
+	event1.eventId='event1';
 	event1.intervals.push(interval1);
 	event1.intervals.push(interval2);
 	/*it("spec 1 ", function(){
@@ -22,6 +24,7 @@ describe('Event Specs', function (){
 		expect(event1.sortProperTimes()).toBe('interval1');
 	});*/
 	it("spec 2 " , function(){
+		db.collection('events').save(event1);
 		interval1.votes.push({'desc':'yes'});
 		//console.log(event1.intervals[0],0);
 		//event1.sortProperTimes();
@@ -29,5 +32,15 @@ describe('Event Specs', function (){
 		//console.log(event1.retNextProperTime());
 		expect(event1.stat[event1.retNextProperTime()].interval.id).toBe('interval1');
 		expect(event1.stat[event1.retNextProperTime()].interval.id).toBe('interval2');
+		//db.close();
+
 	});
+	it(" spec 3 " , function (){
+		db.collection('events').findOne({'eventId' : 'event1'} ,function (err, data){
+			//console.log(data.policy);
+			//var testEvent= new Event
+			expect(data.policy).toBe('all');
+		});
+	});
+	db.close();
 });

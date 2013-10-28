@@ -25,10 +25,9 @@ describe('Event Specs', function (){
 	});*/
 	
 	it("spec 2 " , function(){
-		db.collection('events').save(event1);
+		//db.collection('events').save(event1);
 		interval1.votes.push({'desc':'yes'});
-		db.collection('events').save(event1);
-		db.close();
+		//db.collection('events').save(event1);
 		//console.log(event1.intervals[0],0);
 		//event1.sortProperTimes();
 		//console.log(event1.stat);
@@ -45,5 +44,5 @@ describe('Event Specs', function (){
 			expect(data.policy).toBe('all');
 		});
 	});
-	db.close();
+	//db.close();
 });

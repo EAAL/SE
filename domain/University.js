@@ -1,4 +1,6 @@
-Class = require('../Utils/Class.js')
+Class = require('../Utils/Class.js');
+ds = require ('../data_access/save.js');
+when = require('when');
 var University = Class.extend({
 	constructor: function(roomsFileName) {
 		this.rooms = [];
@@ -22,16 +24,20 @@ var University = Class.extend({
 		}
 		return -1;
 	},
-	findRoomForEvent : function (event){
+	findRoomForEvent : function (event_id, cb){
 		var a;
 		var numRoom;
-		while(true){
-			a= event.retNextProperTime();
-			if(a== -1)return -1;
-			numRoom=this.findRoomForInterval(event.stat[a].interval, (event.stat[a].yesVotes + event.stat[a].maybeVotes));
-			if(numRoom != -1) break;
-		}
-		return numRoom;
+		var event_data;
+		when(ds.loadEvent(event_id)).then(function(data){
+		//console.log(event.policy);
+			while(true){
+				a= event.retNextProperTime();
+				if(a== -1)return -1;
+				numRoom = this.findRoomForInterval(event.stat[a].interval, (event.stat[a].yesVotes + event.stat[a].maybeVotes));
+				if(numRoom != -1) break;
+			}
+			cb(numRoom);
+		});
 	}
 });
 module.exports = University;

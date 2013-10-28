@@ -35,5 +35,22 @@ module.exports = {
 		action: function (req, res) {
 			res.render('create');
 		}
+	},
+	'/finishcall':{
+		method: 'get',
+		authenticated: false,
+		action: function (req, res){
+			res.render('finishcall');
+		}
+	},
+	'/end/getaRoom':{
+		method: 'post',
+		authenticated: false,
+		action: function (req , res) {
+			var Uni = require('../domain/University.js');
+			var univ = new Uni();
+			var room_number = univ.findRoomForEvent(req.body.event_id);
+			res.render('admin' , {"room_number" : room_number});
+		}
 	}
 }

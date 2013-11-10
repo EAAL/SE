@@ -1,5 +1,5 @@
 var db = require('../dbconnection');
-var when = require("when");
+var when = require('when');
 module.exports=new function(){
 	this.saveEvent = function (event){
 		db.collection('events').save(event);

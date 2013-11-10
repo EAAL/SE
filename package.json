@@ -11,6 +11,7 @@
     "mongojs": "~0.9.6",
     "underscore": "~1.5.2",
     "emailjs": "~0.3.6",
-    "jasmine-node": "~1.11.0"
+    "jasmine-node": "~1.11.0",
+    "when": "~2.6.0"
   }
 }

@@ -24,15 +24,16 @@ var University = Class.extend({
 		}
 		return -1;
 	},
-	findRoomForEvent : function (event_id, cb){
+	findRoomForEvent : function (event, cb){
 		var a;
 		var numRoom;
 		var event_data;
+		var event_id = event.eid;
 		when(ds.loadEvent(event_id)).then(function(data){
-		//console.log(event.policy);
+		console.log("!!! " + data);
 			while(true){
-				a= event.retNextProperTime();
-				if(a== -1)return -1;
+				a = event.retNextProperTime();
+				if(a == -1) return -1;
 				numRoom = this.findRoomForInterval(event.stat[a].interval, (event.stat[a].yesVotes + event.stat[a].maybeVotes));
 				if(numRoom != -1) break;
 			}

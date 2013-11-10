@@ -9,7 +9,7 @@ describe('Event Specs', function (){
 	var interval2 = new Interval();
 	interval2.id='interval2';
 	interval1.votes.push({'desc' : 'yes'});
-	interval1.votes.push({'desc':'yes'});
+	interval1.votes.push({'desc' : 'yes'});
 	interval2.votes.push({'desc' : 'yes'});
 	interval2.votes.push({'desc' : 'maybe'});
 

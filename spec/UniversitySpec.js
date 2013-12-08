@@ -7,7 +7,7 @@ describe ('University Spec', function () {
 	//var rooms=[];
 	var room1 = new Room({'capacity' : 20, 'name' : 'room1'});
 	var date1 = new Date('25 Dec, 1995 23:15:00');
-	var date2 = new Date('26 Dec, 1995 23:15:00');
+	var date2 = new Date('26 Dec, 1995 23:15:00');	
 	room1.reserveTimes.push({'start': date1 , 'end' : date2});
 	Uni1.rooms.push(room1);	
 
@@ -22,8 +22,8 @@ describe ('University Spec', function () {
 	var interval1=new Interval();
 	interval1.votes = votes1;
 	interval1.startDate= new Date('24 Dec, 1995 23:15:00');
-	interval1.endDate=new Date('24 Dec, 1995 23:25:00');
-	var event1= new Event("test");
+	interval1.endDate=new Date('24 Dec, 1995 23:15:00');
+	var event1= new Event();
 	event1.policy='all';
 	event1.intervals.push(interval1);
 	/*it('spec1' , function(){

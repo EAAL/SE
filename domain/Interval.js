@@ -1,11 +1,20 @@
 var Class = require('../Utils/Class.js')
 var Interval=Class.extend({
 	constructor:function(){
-		this.votes=[];
-		//this.start=-1;
-		this.id='Unknown';
-		this.startDate='Unknown';
-		this.endDate='Unknown';
+		this.votes = [];
+		this.id = -1;
+		this.date = 'Unknown';
+		this.startTime = 'Unknown';
+		this.endTime = 'Unknown';
+	},
+	poll : function(vote){
+		for(v in this.votes){
+			if(v.user_id == vote.user_id){
+				v.desc = vote.desc;
+				return;
+			}
+		}
+		this.votes.push(vote);
 	},
 	allInvitedOk:function(){
 		for(var i=0 ; i < this.votes.length ; i++){

@@ -1,13 +1,15 @@
 Class = require('../Utils/Class.js')
 Utils = require('../Utils/Utils.js');
-var Event = Class.extend({
-	constructor : function (event_name){
+var Event=Class.extend({
+	constructor : function (){
+		this.owner = 'Unknown';
+		this.dead_line = 'Unknown';
 		this.policy = 'Unknown';
 		this.intervals = [];
 		this.invited_users = [];
 		this.nextProperIntervalIndex = 'Unknown';
 		this.stat = [];
-		this.eid = event_name;
+		this.eventId = 'Unknown';
 	},
 	sortProperTimes : function(){
 		for(var i = 0 ; i < this.intervals.length ; i++){
@@ -19,17 +21,14 @@ var Event = Class.extend({
 			}
 		}
 		this.stat.sort(Utils.compare1);
-		this.nextProperIntervalIndex = this.stat.length-1;
+		this.nextProperIntervalIndex=this.stat.length-1;
 	},
 	retNextProperTime : function (){
-		if(this.nextProperIntervalIndex == 'Unknown'){
+		if(this.nextProperIntervalIndex=='Unknown'){
 			this.sortProperTimes();
 			
 		}
-		else {
-			this.nextProperIntervalIndex -= 1;
-		}
-		
+		else{this.nextProperIntervalIndex-=1;}
 		return this.nextProperIntervalIndex;
 	}
 	

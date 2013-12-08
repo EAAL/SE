@@ -1,5 +1,5 @@
-var mongojs= require('mongojs')
-var config=require('./config')
-var db=mongojs(config.dbname)
-module.exports=db
+var mongojs = require('mongojs')
+//var config = require('./config')
+var db = mongojs('SE' , ['users' , 'events']);
+module.exports = db
 

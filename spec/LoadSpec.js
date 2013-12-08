@@ -4,10 +4,11 @@ when = require("when");
 
 describe('Load Spec' , function (){
 	it('spec1' , function(){
-		when(DA.loadEvent('aryaz'))
+		//var ent;
+		when(DA.loadEvent('event1'))
 		.then(function(ent){
 			console.log(ent);
-			expect(ent.eid).toBe('aryaz');
+			expect(ent.eventId).toBe('event1');	
 			db.close();
 		}, function (err) {
 			console.log("Err " + err);

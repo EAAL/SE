@@ -1,0 +1,144 @@
+<html>
+		
+	<head>
+		<script type="text/javascript" src="/js/jquery.js"></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<link href="/stylesheets/style.css" rel="stylesheet">
+		<link href="/css/bootstrap.css" rel="stylesheet">
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/bootstrap-theme.css" rel="stylesheet">
+		<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+		<link href="/css/style.css" rel="stylesheet">
+	</head>
+	<script> 
+		$(function(){
+			$('button#edit-yes').click(function(e){
+				e.preventDefault();
+				var eveId = $(this).parent().attr('data-eventid');
+				var intId = $(this).parent().attr('data-intid');
+				$.ajax({
+					type: 'POST',
+					url: "http://localhost:3000/delete_vote",
+					data:{ eventId : $(this).parent().attr('data-eventid') , intervalId : $(this).parent().attr('data-intid')}
+				}).done(function(msg){
+					if (msg === "ok"){
+						$('span#possible').addClass("hidden");
+						$('div#yes').prepend('<strong><lable>می‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="yes"><br/><strong><lable>ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb'+ intId + '" value="maybe"><br/><strong><lable>نمی‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="no"><br/>');
+					}
+				});
+			});
+
+			$('button#edit-maybe').click(function(e){
+				e.preventDefault();
+				var eveId = $(this).parent().attr('data-eventid');
+				var intId = $(this).parent().attr('data-intid');
+				$.ajax({
+					type: 'POST',
+					url: "http://localhost:3000/delete_vote",
+					data:{ eventId : $(this).parent().attr('data-eventid') , intervalId : $(this).parent().attr('data-intid')}
+				}).done(function(msg){
+					if (msg === "ok"){
+						$('span#not-want-to').addClass("hidden");
+						$('div#maybe').prepend('<strong><lable>می‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="yes"><br/><strong><lable>ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb'+ intId + '" value="maybe"><br/><strong><lable>نمی‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="no"><br/>');
+					}
+				});
+
+			});
+
+			$('button#edit-no').click(function(e){
+				e.preventDefault();
+				var eveId = $(this).parent().attr('data-eventid');
+				var intId = $(this).parent().attr('data-intid');
+				$.ajax({
+					type: 'POST',
+					url: "http://localhost:3000/delete_vote",
+					data:{ eventId : $(this).parent().attr('data-eventid') , intervalId : $(this).parent().attr('data-intid')}
+				}).done(function(msg){
+					if (msg === "ok"){
+						$('span#not-possible').addClass("hidden");
+						$('div#no').prepend('<strong><lable>می‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="yes"><br/><strong><lable>ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb'+ intId + '" value="maybe"><br/><strong><lable>نمی‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="no"><br/>');
+					}
+				});
+			});
+
+		});
+	</script>
+	<body class="main">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header pull-right">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">رامتونگ</a>
+				</div>
+				<div class="collapse navbar-collapse pull-right">
+					<ul class="nav navbar-nav">
+						<li><a href="#">در‌باره ما</a></li>
+						<li><a href="/showevents">مشاهده‌ی نظرسنجی‌های جدید </a></li>
+						<li><a href="/create">ایجاد قرار</a></li>
+						<li class="active"><a href="/">خانه </a></li>
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+		<div>
+			<div class="container pull-right">
+				<form class="well col-md" id="vote-form" method="post" action="save_vote">
+				<input class="hidden" name="eventId" value="{{=id}}"/>
+				{{
+					for (var i = 0; i < votes.length ; i++){
+				}}
+					</br>
+					<l class="pull-right">: تاریخ </l>
+					<l class="pull-right">{{=votes[i].date}}</l></br>
+					<l class="pull-right">: ساعت شروع</l>
+					<l class="pull-right">{{=votes[i].startTime}}</l></br>
+					<l class="pull-right">: ساعت پایان</l>
+					<l class="pull-right">{{=votes[i].endTime}}</l></br>
+					{{
+						if (votes[i].desc === 'not voted'){
+					}}
+					<div class="pull-right text-right">
+						<strong><lable>می‌توانم شرکت کنم</lable>&nbsp;&nbsp;</strong><input type="radio" name="numb{{=votes[i].intervalId}}" value="yes"><br/>
+						<strong><lable>ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb{{=votes[i].intervalId}}" value="maybe"><br/>
+						<strong><lable>نمی‌توانم شرکت کنم</lable>&nbsp;&nbsp;</strong><input type="radio" name="numb{{=votes[i].intervalId}}" value="no"><br/>
+					</div>
+					</br>
+					</br>
+					</br>
+					{{
+						}else{
+					}}
+						{{
+							if (votes[i].desc === 'yes'){
+						}}
+							<div class="pull-right text-right" id="yes"></div><div class="clearfix"></div>
+							<span id="possible" data-eventid="{{=id}}" data-intid="{{=votes[i].intervalId}}"><button class="btn btn-primary btn-sm pull-left" id="edit-yes">ویرایش</button><p>.میتوانم شرکت کنم</p><div class="clearfix"></div></span>
+						{{
+							}else if (votes[i].desc === 'maybe'){
+						}}
+							<div class="pull-right text-right" id="maybe"></div><div class="clearfix"></div>
+							<span id="not-want-to" data-eventid="{{=id}}" data-intid="{{=votes[i].intervalId}}"><button class="btn btn-warning btn-sm pull-left" id="edit-maybe">ویرایش</button><p>ترجیحم نیست</p><div class="clearfix"></div></span>
+						{{
+							}else{
+						}}
+							<div class="pull-right text-right" id="no"></div><div class="clearfix"></div>
+							<span id="not-possible" data-eventid="{{=id}}" data-intid="{{=votes[i].intervalId}}"><button class="btn btn-danger btn-sm pull-left" id="edit-no">ویرایش</button><p>.نمیتوانم شرکت کنم</p><div class="clearfix"></div></span>
+						{{
+							}
+						}}
+					{{
+						}
+					}}
+				{{
+					}
+				}}
+					<button class="btn btn-primary btn-lg" type="submit" id="vote-submit">ثبت</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<link href="/stylesheets/style.css" rel="stylesheet">
+		<link href="/css/bootstrap.css" rel="stylesheet">
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/bootstrap-theme.css" rel="stylesheet">
+		<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+		<link href="/css/style.css" rel="stylesheet">
+	</head>
+	<body class="main">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header pull-right">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">رامتونگ</a>
+				</div>
+				<div class="collapse navbar-collapse pull-right">
+					<ul class="nav navbar-nav">
+						<li><a href="#">در‌باره ما</a></li>
+						<li class="active"><a href="/show_events">مشاهده‌ی نظرسنجی‌های جدید </a></li>
+						<li><a href="/create">ایجاد قرار</a></li>
+						<li><a href="/">خانه </a></li>
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+		<div>
+			<div class="container">
+				{{
+					if (eventIds.length == 0) {
+				}}
+					<span class="pull-right"> شما نظرسنجی که بتوانید در آن شرکت کنید ندارید</span>
+				{{
+					}else{
+				}}
+					<span class="pull-right"><strong>:نظر سنجی‌های زیر برای شما قابل دست‌یابی است</strong></span></br></br>
+					<div class="container col-md-6 pull-right">
+					{{
+						for (var i = 0 ; i < eventIds.length ; i++){
+					}}
+						<a class="btn btn-default btn-block pull-right" href="/show_votes?eventId={{=eventIds[i]}}">نظر سنجی {{=i + 1}} </a></br>
+					{{
+						}
+					}}
+					</div>
+				{{
+					}
+				}}
+
+			</div>
+		</div>
+	</body>
+</html>

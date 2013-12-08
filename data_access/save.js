@@ -1,19 +1,90 @@
 var db = require('../dbconnection');
-var when = require('when');
-module.exports=new function(){
+var User = require ('../domain/User.js');
+var Vote = require ('../domain/Vote.js');
+module.exports = new function(){
 	this.saveEvent = function (event){
-		db.collection('events').save(event);
-	},
-	this.loadEvent = function (event_id){
-		var deffered = when.defer();
-		db.collection("events").findOne( {'eventId' : event_id} , function (err , data){
-			if (err){
-				deffered.reject("Don't have such event.\n");
-				return;
-			}else{
-				deffered.resolve(data);
+		db.events.save(event);
+	}
+
+	this.add_user_eventId = function ( email , eventId){
+		db.users.findOne({'email' : email } , function (err ,data){
+			console.log(data);
+			if(data == null){
+				var new_user = new User();
+				new_user.email = email;
+				new_user.eventIds.push(eventId);
+				db.users.save(new_user);
+			}
+			else{
+				var ids = data.eventIds;
+				ids.push(eventId);
+				db.users.update({'email' : email} , { $set : {'eventIds' : ids}});
 			}
 		});
-		return deffered.promise;
 	}
+
+	this.load_event = function (eventId , callback){
+		var id = parseInt(eventId , 10);
+		db.events.findOne({'eventId': id} , function (err , data){
+			return callback(err,data);
+		});
+	}
+
+	this.load_user = function (email , callback){
+		db.users.findOne({'email' : email} , function (err , data){
+			return callback(err , data);
+		});
+	}
+
+	this.update_vote = function(votes , id , callback){
+		db.events.findOne({'eventId' : id} , function (err , data){
+			var new_intervals = data.intervals;
+			for (v in votes){
+				var new_vote = new Vote();
+				new_vote.desc = votes[v].value;
+				new_vote.user_id = votes[v].id;
+				for (inter in new_intervals){
+					if (new_intervals[inter].id == votes[v].interval_id){
+						new_intervals[inter].votes.push(new_vote);
+						break;
+					}
+				}
+			}
+
+			db.events.update({'eventId' : id} , { $set : {'intervals' : new_intervals}});
+			return callback();
+		});
+	}
+
+	this.delete_vote = function (email , eventId , interval_id , callback){
+		db.events.findOne({'eventId': eventId } , function (err , data){
+			console.log(data);
+			var new_intervals = [];
+
+			for (inter in data.intervals){
+				if (data.intervals[inter].id === interval_id){
+					var new_votes = [];
+					for (vote in data.intervals[inter].votes){
+						if (data.intervals[inter].votes[vote].user_id === email){
+							continue;
+						}else{
+							new_votes.push(data.intervals[inter].votes);
+						}
+					}
+					data.intervals[inter].votes = new_votes;
+					new_intervals.push(data.intervals[inter]);
+				}else{
+					new_intervals.push(data.intervals[inter]);
+				}
+			}
+
+			console.log('save.js');
+			console.log(new_intervals);
+
+			db.events.update( {'eventId' : eventId } , { $set : {'intervals' : new_intervals} } , function (err , data){
+				return callback(err);
+			});
+		});
+	}
+
 }

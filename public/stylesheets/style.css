@@ -53,3 +53,38 @@ a#login-btn{
 #possible p,#not-want-to p,#not-possible p {
 	margin-top: 4px;
 }
+
+
+#title {
+	text-align: center;
+	border-bottom-color: gray !important;
+	border-bottom: 2px solid;
+}
+
+#title-heading {
+	text-align: right;
+}
+
+#p-success {
+	text-align: center;
+}
+
+#home-div {
+	text-align: center;
+	margin: 280px 160px auto 160px ;
+
+}
+
+.me a {
+	text-align: right;
+}
+
+p#edit-event{
+ 	text-align: right;
+}
+
+p#edit-event-title{
+	text-align: center;
+	border-bottom-color: black !important;
+	border-bottom: 1px solid;
+}

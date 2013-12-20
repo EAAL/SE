@@ -8,6 +8,11 @@
 		<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 		<link href="/css/style.css" rel="stylesheet">
 	</head>
+	<script type="text/javascript">
+		setTimeout(function() {
+			window.location = "/";
+		}, 3000);
+	</script>
 	<body class="main">
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
@@ -22,36 +27,26 @@
 				<div class="collapse navbar-collapse pull-right">
 					<ul class="nav navbar-nav">
 						<li><a href="#">در‌باره ما</a></li>
-						<li class="active"><a href="/me">من</a></li>
+						{{if (auth) { }}
+						<li><a href="/me">من</a></li>
+						{{ } }}
 						<li><a href="/create">ایجاد قرار</a></li>
-						<li><a href="/">خانه </a></li>
+						<li class="active"><a href="/">خانه </a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
+				{{ if (!auth) { }}
+				<div class="collapse navbar-collapse pull-right">
+					<a class="btn btn-default" href="/auth/google" id="login-btn">ورود</a>
+					<span></span>
+				</div>
+				{{ } }}
 			</div>
 		</div>
 		<div>
 			<div class="container">
-				{{
-					if (eventIds.length == 0) {
-				}}
-					<span class="pull-right"> شما نظرسنجی که بتوانید در آن شرکت کنید ندارید</span>
-				{{
-					}else{
-				}}
-					<span class="pull-right"><strong>:نظر سنجی‌های زیر برای شما قابل دست‌یابی است</strong></span></br></br>
-					<div class="container col-md-6 pull-right">
-					{{
-						for (var i = 0 ; i < eventIds.length ; i++){
-					}}
-						<a class="btn btn-default btn-block pull-right" href="/show_votes?eventId={{=eventIds[i]}}">نظر سنجی {{=i + 1}} </a></br>
-					{{
-						}
-					}}
-					</div>
-				{{
-					}
-				}}
-
+				<div class="well pull-right" id="success">
+					<p class="text-primary" id="p-success">.درخواست شما با موفقیت ثبت شد</p>
+				</div>
 			</div>
 		</div>
 	</body>

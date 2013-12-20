@@ -1,0 +1,110 @@
+<html>
+	<head>
+		<script type="text/javascript" src="/js/jquery.js"></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<link href="/stylesheets/style.css" rel="stylesheet">
+		<link href="/css/bootstrap.css" rel="stylesheet">
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/bootstrap-theme.css" rel="stylesheet">
+		<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+		<link href="/css/style.css" rel="stylesheet">
+	</head>
+	<script>
+		$(function(){
+			$('button#del').click(function(){
+				$.ajax({
+					type : 'POST',
+					url : 'http://localhost:3000/edit_event',
+					data : {type : 'del_interval' , intervalId : $(this).attr('name') , eventId : $(this).attr('data-id')}
+				}).done(function(msg){
+					alert(msg);
+				});
+				$(this).parent().addClass('hidden')
+			});
+			$('button#del_event').click(function(){
+				$.ajax({
+					type : 'POST',
+					url : 'http://localhost:3000/edit_event',
+					data : {type : 'del_event' , eventId : ($(this).attr('data-id'))} 
+				}).done(function(msg){
+
+				});
+			});
+			$('button#add').click(function(){
+				$('div#new_interval').removeClass('hidden');
+			});
+
+			$('button#final_add').click(function(){
+				var interval = $('input#date').val();
+				interval = interval.split(" ");
+				var d = interval[0];
+				var time = interval[1].split("-");
+				var sTime = time[0];
+				var eTime = time[1];
+				$.ajax({
+					type : 'POST',
+					url : 'http://localhost:3000/edit_event',
+					data : {type : 'add_interval' , eventId : ($(this).attr('data-id')) , startTime : sTime , endTime : eTime , date : d} 
+				}).done(function(msg){
+					alert(msg)
+				});
+				$('div#new_interval').addClass('hidden');
+				window.location.reload();
+			});
+
+			$('button#finish').click(function(){
+				window.location.href = "/";
+			});
+		});
+	</script>
+	<body class="main">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header pull-right">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">رامتونگ</a>
+				</div>
+				<div class="collapse navbar-collapse pull-right">
+					<ul class="nav navbar-nav">
+						<li><a href="#">در‌باره ما</a></li>
+						<li class="active"><a href="/me">من</a></li>
+						<li><a href="/create">ایجاد قرار</a></li>
+						<li><a href="/">خانه </a></li>
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+		<div>
+			<div class="container">
+				<div class="well pull-right">
+					<p id="edit-event"> : عنوان </p><p class="text-info" id="edit-event-title">"{{=event.title}}"</p>
+					<p class="pull-right"> </p>
+					{{
+						for(inter in event.intervals){
+					}}
+						<div class="clearfix"></div>
+						<div class="pull-right">
+							<p class="pull-right"> : روز</p><p>{{=event.intervals[inter].date}}</p>
+							<p class="pull-right">:ساعت شروع</p>{{=event.intervals[inter].startTime}}</p>
+							<p class="pull-right">:ساعت پایان</p><p>{{=event.intervals[inter].endTime}}</p><button data-id="{{=event.eventId}}" id="del" name="{{=event.intervals[inter].id}}" class="btn btn-danger btn-sm">حذف این روز و ساعت</button><br/><br/><br/>
+						</div>
+					{{
+						}
+					}}
+					<div class="clearfix"></div>
+					<div class="pull-right hidden" id="new_interval">
+						<label class="text-right text-primary pull-right">:انتخاب تاریخ</label>
+						<input class="form-control" id="date" type="text" placeholder="yyyy/mm/dd hh:mm-hh:mm"/><button data-id="{{=event.eventId}}" id="final_add" class="btn btn-xs btn-info">ایجاد</button>
+					</div><div class="clearfix"></div><br/>
+					<button id="add" class="btn btn-info pull-right">اضافه کردن روز و ساعت جدید</button><br/><br/><br/>
+
+					<button data-id="{{=event.eventId}}" class="btn btn-danger" id="del_event">حذف نظر‌سنجی</button>&nbsp;<button id="finish" class="btn btn-success">اتمام ویرایش</button>
+				</div><div class="clearfix"></div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -21,7 +21,7 @@
 				<div class="collapse navbar-collapse pull-right">
 					<ul class="nav navbar-nav">
 						<li><a href="#">در‌باره ما</a></li>
-						<li><a href="/showevents">مشاهده‌ی نظرسنجی‌های جدید </a></li>
+						<li><a href="/me">من</a></li>
 						<li class="active"><a href="/create">ایجاد قرار</a></li>
 						<li><a href="/">خانه </a></li>
 					</ul>
@@ -31,6 +31,11 @@
 		<div>
 			<div class="container">
 				<form class="well col-md" id="create-form" action="create_auth" method="post">
+					<div>
+						<label class="text-right text-primary pull-right">:عنوان  <a class="text-danger">*</a></label>
+						<input class="form-control text-right" name="title" type="text" placeholder="... عنوان نظر سنجی مورد نظر"></input>
+					</div>
+					<br/>
 					<div>
 						<label class="text-right text-primary pull-right">:انتخاب تاریخ <a class="text-danger">*</a></label>
 						<input class="form-control" name="date" type="text" placeholder="yyyy/mm/dd hh:mm-hh:mm,..."></input>
@@ -53,7 +58,7 @@
 					</div>
 					<button class="btn btn-small btn-primary" type="submit">ایجاد</button>
 				</form>
-			</div>
+			</div><div class="clearfix"></div>
 		</div>
 	</body>
 </html>

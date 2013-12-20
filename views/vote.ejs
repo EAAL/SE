@@ -77,7 +77,7 @@
 				<div class="collapse navbar-collapse pull-right">
 					<ul class="nav navbar-nav">
 						<li><a href="#">در‌باره ما</a></li>
-						<li><a href="/showevents">مشاهده‌ی نظرسنجی‌های جدید </a></li>
+						<li><a href="/me">من </a></li>
 						<li><a href="/create">ایجاد قرار</a></li>
 						<li class="active"><a href="/">خانه </a></li>
 					</ul>
@@ -87,6 +87,7 @@
 		<div>
 			<div class="container pull-right">
 				<form class="well col-md" id="vote-form" method="post" action="save_vote">
+				<p id="title-heading"><strong>: عنوان نظر‌سنجی</strong></p><p class="text-info" id="title">"{{=title}}"</p>
 				<input class="hidden" name="eventId" value="{{=id}}"/>
 				{{
 					for (var i = 0; i < votes.length ; i++){
@@ -102,10 +103,10 @@
 						if (votes[i].desc === 'not voted'){
 					}}
 					<div class="pull-right text-right">
-						<strong><lable>می‌توانم شرکت کنم</lable>&nbsp;&nbsp;</strong><input type="radio" name="numb{{=votes[i].intervalId}}" value="yes"><br/>
-						<strong><lable>ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb{{=votes[i].intervalId}}" value="maybe"><br/>
-						<strong><lable>نمی‌توانم شرکت کنم</lable>&nbsp;&nbsp;</strong><input type="radio" name="numb{{=votes[i].intervalId}}" value="no"><br/>
-					</div>
+						<strong><lable class="text-primary">می‌توانم شرکت کنم</lable>&nbsp;&nbsp;</strong><input type="radio" name="numb{{=votes[i].intervalId}}" value="yes"><br/>
+						<strong><lable class="text-warning">ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb{{=votes[i].intervalId}}" value="maybe"><br/>
+						<strong><lable class="text-danger">نمی‌توانم شرکت کنم</lable>&nbsp;&nbsp;</strong><input type="radio" name="numb{{=votes[i].intervalId}}" value="no"><br/>
+					</div><div class="clearfix"></div>
 					</br>
 					</br>
 					</br>

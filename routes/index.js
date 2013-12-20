@@ -36,8 +36,8 @@ module.exports = {
 				dates.push(temp);
 				interval_id += 1;
 			}
-			domain.create(req.user , dates , req_invited , dead_line , policy);
-			res.send("با موفقیت ثبت شد");
+			domain.create(req.body.title , req.user , dates , req_invited , dead_line , policy);
+			res.redirect('/success');
 		}
 	},
 	'/create' : {
@@ -51,11 +51,7 @@ module.exports = {
 		method : 'get',
 		authenticated : true,
 		action : function (req, res){
-			console.log("salam");
-			console.log(req.user.email);
 			domain.user_load(req.user.email , function (err , data){
-				console.log('after finding the obj form database');
-				console.log(data);
 				if (data.eventIds == null){
 					res.render( 'show_event' , {err : false , no_event : true});
 				}
@@ -69,8 +65,8 @@ module.exports = {
 		method : 'get',
 		authenticated : true,
 		action : function (req , res){
-			domain.event_load(req.user.email , req.query.eventId , function (data){
-				res.render('vote' , {votes : data , id : req.query.eventId});
+			domain.event_load(req.user.email , req.query.eventId , function (data , title){
+				res.render('vote' , {votes : data , id : req.query.eventId , title: title});
 			});
 		}
 	},
@@ -93,7 +89,7 @@ module.exports = {
 				}
 			}
 			domain.save_votes(votes , id , function (){
-				res.send('نظر مشا با موفقیت ثبت شد');
+				res.redirect('/success');
 			});
 		}
 	},
@@ -110,6 +106,61 @@ module.exports = {
 					res.send("ok");
 				}
 			});
+		}
+	},
+	'/success' :{
+		method : 'get',
+		authenticated : true,
+		action: function (req , res){
+			res.render('success' , {email : req.user.email , auth : true});
+		}
+	},
+	'/me':{
+		method : 'get',
+		authenticated : true,
+		action: function (req , res){
+			res.render('me' , {auth : true});
+		}
+	},
+	'/owner_event':{
+		method : 'get',
+		authenticated : true,
+		action: function (req , res){
+			domain.owner_events(req.user.email , function (data){
+				res.render('event_list' , {events : data});
+			});
+		}
+	},
+	'/show_event':{
+		method : 'get',
+		authenticated : true,
+		action: function (req , res) {
+			domain.loadOne_event((req.query.eventId / 1) , function (data){
+				res.render('edit_event' , {event : data});
+			});
+		}
+	},
+	'/edit_event':{
+		method : 'post',
+		authenticated : true,
+		action: function (req , res){
+			if(req.body.type == 'del_interval'){
+				domain.del_interval(req.body.eventId/1 , req.body.intervalId/1 , function(){
+					res.send(".با موفقیت انجام شد");
+				});
+			}else if(req.body.type == 'add_interval'){
+				var new_interval = new Interval();
+				new_interval.date = req.body.date;
+				new_interval.startTime = req.body.startTime;
+				new_interval.endTime = req.body.endTime;
+				domain.add_interval(req.body.eventId/1 , new_interval , function(){
+					res.send(".با موفقیت انجام شد");
+				});
+			}else if(req.body.type == 'del_event'){
+				domain.delete_event(req.body.eventId/1 , function(){
+					res.send("happy for you");
+				});
+			}
 		}
 	},
 	'/end/getaRoom':{

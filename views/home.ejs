@@ -23,7 +23,7 @@
 					<ul class="nav navbar-nav">
 						<li><a href="#">در‌باره ما</a></li>
 						{{if (auth) { }}
-						<li><a href="/showevents">مشاهده‌ی نظرسنجی‌های جدید </a></li>
+						<li><a href="/me">من</a></li>
 						{{ } }}
 						<li><a href="/create">ایجاد قرار</a></li>
 						<li class="active"><a href="/">خانه </a></li>
@@ -39,9 +39,9 @@
 		</div>
 		<div>
 			<div class="container">
-				<form class="well col-md" id="create-form" action="create_auth" method="post">
-					
-				</form>
+				<div class="well pull-right" id="home-div">
+					<h2 class="text-info">.بزودی در این قسمت موارد هیجان انگیز خواهیم داشت حالا ببین</h2>
+				</div>
 			</div>
 		</div>
 	</body>

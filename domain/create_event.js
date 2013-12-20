@@ -3,9 +3,11 @@ var db = require('../dbconnection');
 var Event = require('../domain/Event.js');
 var when = require('when');
 module.exports = new function () {
-	this.create = function (owner , intervals, invited , deadLine , policy){
+
+	this.create = function (title , owner , intervals, invited , deadLine , policy){
 		var new_event = new Event();
-		new_event.owner = owner;
+		new_event.title = title;
+		new_event.owner = owner.email;
 		new_event.intervals = intervals;
 		new_event.invited_users = invited;
 		new_event.dead_line = deadLine;
@@ -39,7 +41,7 @@ module.exports = new function () {
 								'intervalId' : event.intervals[i].id});
 				}
 			}
-			return callback (votes);
+			return callback (votes , event.title);
 		});
 	},
 
@@ -59,6 +61,36 @@ module.exports = new function () {
 	this.delete_vote = function (email , eventId , intervalId , callback){
 		data.delete_vote(email , eventId , intervalId , function (err){
 			return callback(err);
+		});
+	},
+
+	this.owner_events = function (email , callback){
+		data.load_all_events(email , function(data) {
+			callback(data);
+		});
+	}
+
+	this.loadOne_event = function (eventId , callback){
+		data.loadOne_event(eventId , function(data){
+			callback(data);
+		});
+	}
+
+	this.del_interval = function (eventId , intervalId , callback){
+		data.del_interval(eventId , intervalId , function(){
+			callback();
+		});
+	}
+
+	this.delete_event = function (eventId , callback){
+		data.del_event(eventId , function(){
+			callback();
+		});
+	}
+
+	this.add_interval = function (eventId , interval , callback){
+		data.add_interval(eventId , interval , function(){
+			callback();
 		});
 	}
 }

@@ -32,18 +32,18 @@
 		<div>
 			<div class="container">
 				{{
-					if (eventIds.length == 0) {
+					if (events.length == 0) {
 				}}
-					<span class="pull-right"> شما نظرسنجی که بتوانید در آن شرکت کنید ندارید</span>
+					<span class="pull-right text-info"> .شما نظر‌سنجی اینجاد نکردید که بتوانید آن را ویرایش کنید</span>
 				{{
 					}else{
 				}}
-					<span class="pull-right"><strong>:نظر سنجی‌های زیر برای شما قابل دست‌یابی است</strong></span></br></br>
+					<span class="pull-right"><strong>:نظرسنجی‌هایی که شما می‌توانید آنها را ویرایش کنید</strong></span></br></br>
 					<div class="container col-md-6 pull-right">
 					{{
-						for (var i = 0 ; i < eventIds.length ; i++){
+						for (var i = 0 ; i < events.length ; i++){
 					}}
-						<a class="btn btn-default btn-block pull-right" href="/show_votes?eventId={{=eventIds[i]}}">نظر سنجی {{=i + 1}} </a></br>
+						<a class="btn btn-default btn-block pull-right" href="/show_event?eventId={{=events[i].eventId}}">نظر سنجی {{=i + 1}} </a></br>
 					{{
 						}
 					}}

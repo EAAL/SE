@@ -87,4 +87,48 @@ module.exports = new function(){
 		});
 	}
 
+	this.load_all_events = function (email , callback){
+		db.events.find({'owner' : email} , function (err , data){
+			callback(data);
+		});
+	}
+
+	this.loadOne_event = function (eventId , callback){
+		db.events.findOne({'eventId' : eventId} , function (err , data){
+			callback(data);
+		});
+	}
+
+	this.del_interval = function (eventId , intervalId , callback){
+		db.events.findOne({'eventId': eventId} ,function (err , data){
+			new_intervals = [];
+			for (i in  data.intervals){
+				if (data.intervals[i].id != intervalId){
+					new_intervals.push(data.intervals[i]);
+				}
+			}
+			db.events.update({'eventId' : eventId } , {$set : {'intervals' : new_intervals} } , function (err , data){
+				return callback();
+			});
+		});
+	}
+
+	this.del_event = function (eventId , callback){
+		db.events.remove({'eventId' : eventId} , function (err, data){
+			callback();
+		});
+	}
+
+	this.add_interval = function(eventId , interval , callback){
+		db.events.findOne({'eventId' : eventId} , function (err , data){
+			new_intervals = data.intervals;
+
+			interval.id = new_intervals[new_intervals.length - 1].id + 1;
+			new_intervals.push(interval);
+			db.events.update({'eventId' : eventId} , { $set : {'intervals' : new_intervals } } , function (err , data){
+				callback();
+			});
+		});
+	}
+
 }

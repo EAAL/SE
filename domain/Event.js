@@ -2,6 +2,7 @@ Class = require('../Utils/Class.js')
 Utils = require('../Utils/Utils.js');
 var Event=Class.extend({
 	constructor : function (){
+		this.title = 'Unknown';
 		this.owner = 'Unknown';
 		this.dead_line = 'Unknown';
 		this.policy = 'Unknown';

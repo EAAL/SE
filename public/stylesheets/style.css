@@ -88,3 +88,7 @@ p#edit-event-title{
 	border-bottom-color: black !important;
 	border-bottom: 1px solid;
 }
+
+#edit-event-buttons {
+	margin-left: 60px; 
+}

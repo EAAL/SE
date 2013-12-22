@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<script type="text/javascript" src="/js/jquery.js"></script>
+		<script type="text/javascript" src="/js/jquery.easing.js"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<link href="/stylesheets/style.css" rel="stylesheet">
 		<link href="/css/bootstrap.css" rel="stylesheet">
@@ -8,9 +9,13 @@
 		<link href="/css/bootstrap-theme.css" rel="stylesheet">
 		<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 		<link href="/css/style.css" rel="stylesheet">
+		<link href="/css/stylesheet/style.css" rel="stylesheet">
+
 	</head>
 	<script>
 		$(function(){
+			$('div#main-div').hide();
+			$('div#main-div').slideDown(1400 ,'easeOutBounce', function(){});
 			$('button#del').click(function(){
 				$.ajax({
 					type : 'POST',
@@ -35,12 +40,9 @@
 			});
 
 			$('button#final_add').click(function(){
-				var interval = $('input#date').val();
-				interval = interval.split(" ");
-				var d = interval[0];
-				var time = interval[1].split("-");
-				var sTime = time[0];
-				var eTime = time[1];
+				var d = $('input#date').val();
+				var sTime = $('input#stime').val();
+				var eTime = $('input#etime').val();
 				$.ajax({
 					type : 'POST',
 					url : 'http://localhost:3000/edit_event',
@@ -48,7 +50,6 @@
 				}).done(function(msg){
 					alert(msg)
 				});
-				$('div#new_interval').addClass('hidden');
 				window.location.reload();
 			});
 
@@ -78,9 +79,9 @@
 				</div><!--/.nav-collapse -->
 			</div>
 		</div>
-		<div>
+		<div id="main-div">
 			<div class="container">
-				<div class="well pull-right">
+				<div class="well pull-right col-md-4">
 					<p id="edit-event"> : عنوان </p><p class="text-info" id="edit-event-title">"{{=event.title}}"</p>
 					<p class="pull-right"> </p>
 					{{
@@ -96,13 +97,28 @@
 						}
 					}}
 					<div class="clearfix"></div>
-					<div class="pull-right hidden" id="new_interval">
-						<label class="text-right text-primary pull-right">:انتخاب تاریخ</label>
-						<input class="form-control" id="date" type="text" placeholder="yyyy/mm/dd hh:mm-hh:mm"/><button data-id="{{=event.eventId}}" id="final_add" class="btn btn-xs btn-info">ایجاد</button>
-					</div><div class="clearfix"></div><br/>
-					<button id="add" class="btn btn-info pull-right">اضافه کردن روز و ساعت جدید</button><br/><br/><br/>
+					<div class="pull-right hidden col-md-10" id="new_interval">
+						<div class="pull-right">
+							<div><label class="text-right text-primary pull-right">:گزینه جدید</label></div>
+							<div class="input-group pull-right">
+								<span class="input-group-btn"><button data-id="{{=event.eventId}}" id="final_add" class="btn btn-sm btn-info">ایجاد</button></span>
+								<div>
+									<input class="form-control text-right" id="date" type="text" placeholder=".... روز"/>
+								</div>
+								<div>
+									<input class="form-control text-right" id="stime" type="text" placeholder=".... ساعت شروع"/>
+								</div>
+								<div>
+									<input class="form-control text-right" id="etime" type="text" placeholder=".... ساعت پایان"/>
+								</div>
+							</div>
+						</div>
+					</div><div class="clearfix"></div><br/><br/>
+					<div id="edit-event-buttons">
+						<button id="add" class="btn btn-info pull-right">اضافه کردن روز و ساعت جدید</button><br/><br/><br/>
 
-					<button data-id="{{=event.eventId}}" class="btn btn-danger" id="del_event">حذف نظر‌سنجی</button>&nbsp;<button id="finish" class="btn btn-success">اتمام ویرایش</button>
+						<button data-id="{{=event.eventId}}" class="btn btn-danger" id="del_event">حذف نظر‌سنجی</button>&nbsp;<button id="finish" class="btn btn-success">اتمام ویرایش</button>
+					</div>
 				</div><div class="clearfix"></div>
 			</div>
 		</div>

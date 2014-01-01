@@ -98,21 +98,20 @@
 					}}
 					<div class="clearfix"></div>
 					<div class="pull-right hidden col-md-10" id="new_interval">
-						<div class="pull-right">
-							<div><label class="text-right text-primary pull-right">:گزینه جدید</label></div>
-							<div class="input-group pull-right">
-								<span class="input-group-btn"><button data-id="{{=event.eventId}}" id="final_add" class="btn btn-sm btn-info">ایجاد</button></span>
-								<div>
-									<input class="form-control text-right" id="date" type="text" placeholder=".... روز"/>
+						<from class="pull-right from-horizontal">
+							<div class="control-group">
+								<label class="text-right text-primary pull-right" id="add-label" for="add-div">:گزینه جدید</label>
+								<br/>
+								<div class="controls form-inline" id="add-div">
+									<label class="pull-right" for="date" style="float:right;">: روز</label>
+									<input class="form-control text-right" id="date" type="date" style="float:right;" placeholder=".... روز"/>
+									<label class="pull-right" for="stime">: ساعت شروع</label>
+									<input class="form-control text-right" id="stime" type="time" placeholder=".... ساعت شروع"/>
+									<label class="pull-right" for="etime">: ساعت پایان</label>
+									<input class="form-control text-right" id="etime" type="time" placeholder=".... ساعت پایان"/>
 								</div>
-								<div>
-									<input class="form-control text-right" id="stime" type="text" placeholder=".... ساعت شروع"/>
-								</div>
-								<div>
-									<input class="form-control text-right" id="etime" type="text" placeholder=".... ساعت پایان"/>
-								</div>
-							</div>
-						</div>
+							</div><div class="clearfix"></div>
+						</from>
 					</div><div class="clearfix"></div><br/><br/>
 					<div id="edit-event-buttons">
 						<button id="add" class="btn btn-info pull-right">اضافه کردن روز و ساعت جدید</button><br/><br/><br/>

@@ -51,8 +51,9 @@ module.exports = new function(){
 				}
 			}
 
-			db.events.update({'eventId' : id} , { $set : {'intervals' : new_intervals}});
-			return callback();
+			db.events.update({'eventId' : id} , { $set : {'intervals' : new_intervals}} , function(){
+				return callback();
+			});
 		});
 	}
 

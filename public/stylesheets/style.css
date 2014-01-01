@@ -17,7 +17,7 @@ a#login-btn{
 	margin-top: 20px;
 }
 
-#possible {
+.possible {
 	display: block;
 	width: 90%;
 	margin : 7px auto;
@@ -28,7 +28,7 @@ a#login-btn{
 	background-color: #00CCFF;
 }
 
-#not-want-to {
+.not-want-to {
 	display: block;
 	width: 90%;
 	margin : 7px auto;
@@ -39,7 +39,7 @@ a#login-btn{
 	background-color: #FF9900; 
 }
 
-#not-possible {
+.not-possible {
 	display: block;
 	width: 90%;
 	margin : 7px auto;
@@ -50,7 +50,7 @@ a#login-btn{
 	background-color: #FF3333;
 }
 
-#possible p,#not-want-to p,#not-possible p {
+.possible p,.not-want-to p,.not-possible p {
 	margin-top: 4px;
 }
 
@@ -92,3 +92,8 @@ p#edit-event-title{
 #edit-event-buttons {
 	margin-left: 60px; 
 }
+
+input#date , input#stime , input#etime{
+	margin : 2px;
+}
+

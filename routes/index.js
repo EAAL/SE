@@ -1,20 +1,9 @@
-domain = require('../domain/create_event.js');
+domain = require('../domain/core_domain.js');
 Interval = require ('../domain/Interval.js');
+Uni = require('../domain/University.js');
 var when = require('when');
 
 module.exports = {
-	'/' : {
-		method : 'get' , 
-		authenticated : false , 
-		action : function (req , res){
-			if(req.isAuthenticated()){
-				res.render('home' , {email : req.user.email , auth : true});
-			}
-			else{
-				res.render('home' , {email : null , auth : false});
-			}
-		}
-	},
 	'/create_auth': {
 		method: 'post',
 		authenticated: true,
@@ -73,7 +62,7 @@ module.exports = {
 			});
 		}
 	},
-	'/save_vote' : {
+	'/save_vote': {
 		method : 'post',
 		authenticated : true,
 		action : function (req , res){
@@ -94,7 +83,7 @@ module.exports = {
 			});
 		}
 	},
-	'/delete_vote':{
+	'/delete_vote': {
 		method: 'post',
 		authenticated: true,
 		action: function (req ,res){
@@ -109,14 +98,14 @@ module.exports = {
 			});
 		}
 	},
-	'/success' :{
+	'/success': {
 		method : 'get',
 		authenticated : true,
 		action: function (req , res){
 			res.render('success' , {email : req.user.email , auth : true});
 		}
 	},
-	'/me':{
+	'/me': {
 		method : 'get',
 		authenticated : true,
 		action: function (req , res){
@@ -164,14 +153,47 @@ module.exports = {
 			}
 		}
 	},
-	'/end/getaRoom':{
-		method: 'post',
+	'/end/getaRoom': {
+		method: 'get',
 		authenticated: false,
 		action: function (req , res) {
-			var Uni = require('../domain/University.js');
-			var univ = new Uni();
-			var room_number = univ.findRoomForEvent(req.body.event_id);
-			res.render('admin' , {"room_number" : room_number});
+			var id = parseInt(req.query.eventId , 10);
+			domain.reserveRoom(Uni, req.query.eventId/1, function (data) {
+			    res.send(data);
+			});
+		}
+	},
+	'/end/email': {
+		method: 'get',
+		authenticated: false,
+		action: function (req, res){
+			var id = parseInt(req.query.eventId , 10);
+			domain.sendEmail(id,function(){
+			      res.send("sent.");
+			});
+		}
+	},
+	'/admin': {
+		method: 'get',
+		authenticated: true,
+		action: function (req, res, next) {
+			if(req.user.email == 'aryaz.egh@gmail.com') {
+				res.render('admin');
+			}
+			else
+				return res.send("Authentication Failed!");
+		}
+	},
+	'/': {
+		method : 'get' , 
+		authenticated : false , 
+		action : function (req , res){
+			if(req.isAuthenticated()){
+				res.render('home' , {email : req.user.email , auth : true});
+			}
+			else{
+				res.render('home' , {email : null , auth : false});
+			}
 		}
 	}
 }

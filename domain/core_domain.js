@@ -2,6 +2,15 @@ var data = require("../data_access/save.js");
 var db = require('../dbconnection');
 var Event = require('../domain/Event.js');
 var when = require('when');
+var email = require('../node_modules/emailjs/email');
+var User = require('../emailData.js');
+var server  = email.server.connect({
+   user:    User.username,
+   password:User.password,
+   host:    "smtp.gmail.com",
+   ssl:     true
+
+});
 module.exports = new function () {
 
 	this.create = function (title , owner , intervals, invited , deadLine , policy){
@@ -91,6 +100,28 @@ module.exports = new function () {
 	this.add_interval = function (eventId , interval , callback){
 		data.add_interval(eventId , interval , function(){
 			callback();
+		});
+	}
+
+	this.sendEmail = function(eventId , callback){
+		data.loadOne_event(eventId , function(data){
+			  for(var i=0;i<data.invited_users.length;i++){
+				server.send({
+				text:    "This email is sent to inform you about event:" + data.title,
+				from:    "admin<fatemehz.gharayimanesh@gmail.com>",
+				to:      data.invited_users[i],
+				subject: "testing emailjs"
+				}, function(err, message) { console.log(err || message); });
+			  }
+		  callback(data);
+
+		});
+	}
+
+	this.reserveRoom = function(univ, eventId, callback){
+		data.loadOne_event(eventId , function(err, ev){
+			var room = univ.findRoomForEvent(ev);
+			return callback(room);
 		});
 	}
 }

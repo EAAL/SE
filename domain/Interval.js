@@ -42,5 +42,5 @@ var Interval=Class.extend({
 		return num;
 	}
 });
-module.exports =Interval
+module.exports = Interval
 

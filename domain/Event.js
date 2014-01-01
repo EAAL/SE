@@ -17,17 +17,20 @@ var Event=Class.extend({
 			if((this.intervals[i].allInvitedOk() == true && this.policy =='all') ||
 			(this.intervals[i].moreThanHalfOk() == true && this.policy == 'half') ||
 			(this.policy == 'max')){
-				this.stat.push( {'interval': this.intervals[i], 'yesVotes':this.intervals[i].numSpecificVotes('yes'), 'maybeVotes':this.intervals[i].numSpecificVotes('maybe'),
-					'noVotes' : this.intervals[i].numSpecificVotes('no')});
+				this.stat.push({
+								'interval': this.intervals[i],
+								'yesVotes': this.intervals[i].numSpecificVotes('yes'),
+								'maybeVotes': this.intervals[i].numSpecificVotes('maybe'),
+								'noVotes': this.intervals[i].numSpecificVotes('no')
+								});
 			}
 		}
 		this.stat.sort(Utils.compare1);
 		this.nextProperIntervalIndex=this.stat.length-1;
 	},
-	retNextProperTime : function (){
-		if(this.nextProperIntervalIndex=='Unknown'){
+	retNextProperTime : function () {
+		if(this.nextProperIntervalIndex == 'Unknown'){
 			this.sortProperTimes();
-			
 		}
 		else{this.nextProperIntervalIndex-=1;}
 		return this.nextProperIntervalIndex;

@@ -1,0 +1,5 @@
+[
+	{"capacity": 10, "name": "100", "reserveTimes": []},
+	{"capacity": 10, "name": "101", "reserveTimes": []},
+	{"capacity": 20, "name": "102", "reserveTimes": []}
+]

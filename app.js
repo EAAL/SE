@@ -10,7 +10,6 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var domain = require('./domain/create_event');
 var DB = require('./dbconnection');
 var passport = require('passport') , 
 	GoogleStrategy = require('passport-google').Strategy;
@@ -64,7 +63,6 @@ app.use(passport.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-// development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
@@ -87,10 +85,6 @@ for (var key in routes) {
 		app[v.method](key, v.action);
 	}
 }
-
-// app.get('/:username', function (req, res) {
-// 	res.send(req.params.username);
-// });
 
 app.get('/auth/google', passport.authenticate('google'));
 

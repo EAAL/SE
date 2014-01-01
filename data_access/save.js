@@ -1,7 +1,7 @@
 var db = require('../dbconnection');
 var User = require ('../domain/User.js');
 var Vote = require ('../domain/Vote.js');
-module.exports = new function(){
+module.exports = new function() {
 	this.saveEvent = function (event){
 		db.events.save(event);
 	}
@@ -95,7 +95,8 @@ module.exports = new function(){
 
 	this.loadOne_event = function (eventId , callback){
 		db.events.findOne({'eventId' : eventId} , function (err , data){
-			callback(data);
+			console.log(data);
+			return callback(err, data);
 		});
 	}
 

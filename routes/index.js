@@ -9,9 +9,12 @@ module.exports = {
 		authenticated: true,
 		action: function (req, res) {
 			var dates = [];
-			var req_dates = req.body.date.split(/[,;]/g);
+			var req_dates = req.body.dates.split(/[,;]/g);
 			var req_invited = req.body.invited.split(/[,;]/g);
-			var dead_line = req.body.deadline;
+			console.log(req.body);
+			var dead_line_date = req.body.end_vote_date;
+			var dead_line_time = req.body.end_vote_time;
+			var dead_line = dead_line_date + ' ' + dead_line_time;
 			var policy = req.body.numb;
 			console.log(req.body.numb);
 			var interval_id = 1;
@@ -41,11 +44,11 @@ module.exports = {
 		authenticated : true,
 		action : function (req, res){
 			domain.user_load(req.user.email , function (err , data){
-				if (data.eventIds == null){
+				if (data == null){
 					res.render( 'show_event' , {err : false , no_event : true});
 				}
 				else{
-					res.render( 'show_event' , {eventIds : data.eventIds , err : false , no_event : false });
+					res.render( 'show_event' , {events : data , err : false , no_event : false });
 				}
 			});
 		}
@@ -63,18 +66,16 @@ module.exports = {
 		method : 'post',
 		authenticated : true,
 		action : function (req , res){
-			var number = 1;
 			var id = parseInt(req.body.eventId , 10);
 			var votes = [];
 			for(v in  req.body){
-				if (req.body[v] === 'yes' || req.body[v] === 'no' || req.body[v] === 'maybe'){
+				//if (req.body[v] === 'yes' || req.body[v] === 'no' || req.body[v] === 'maybe'){
+				if (v.indexOf('numb') === 0) {
 					var temp = {};
-					temp.interval_id = number;
+					temp.interval_id = v.substring(4)/1;
 					temp.id = req.user.email;
-					console.log(req.body[v]);
 					temp.value = req.body[v];
 					votes.push(temp);
-					number ++ ;
 				}
 			}
 			domain.save_votes(votes , id , function (){
@@ -124,7 +125,7 @@ module.exports = {
 		method : 'get',
 		authenticated : true,
 		action: function (req , res) {
-			domain.loadOne_event((req.query.eventId / 1) , function (data){
+			domain.loadOne_event((req.query.eventId / 1) , function (err , data){
 				res.render('edit_event' , {event : data});
 			});
 		}

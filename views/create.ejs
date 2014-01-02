@@ -1,13 +1,43 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<link href="/css/bootstrap.css" rel="stylesheet">
-		<link href="/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/css/bootstrap-theme.css" rel="stylesheet">
-		<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-		<link href="/css/style.css" rel="stylesheet">
+		<link href="/css/bootstrap.css" rel="stylesheet"/>
+		<link href="/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="/css/bootstrap-theme.css" rel="stylesheet"/>
+		<link href="/css/bootstrap-theme.min.css" rel="stylesheet"/>
+		<link href="/css/style.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="/jalali/bootstrap-datepicker.min.css"/>
+        <script type="text/javascript" src="/js/jquery.js"></script>
+		<script src="/jalali/bootstrap-datepicker.min.js"></script>
+		<script src="/jalali/bootstrap-datepicker.fa.min.js"></script>
 	</head>
 	<body class="main">
+		<script>
+			$(document).ready(function() {
+        		$("#datepicker1").datepicker();
+				$("#datepicker1btn").click(function(event) {
+					event.preventDefault();
+					$("#datepicker1").focus();
+				});
+
+				$("#datepicker11").datepicker();
+				$("#datepicker11btn").click(function(event) {
+					event.preventDefault();
+					$("#datepicker11").focus();
+				});
+
+				$('button#add-btn').click(function (e){
+					e.preventDefault();
+					var temp = '<tr> <td class="text-primary">' + $('input#datepicker1').val() + '		' + $('input#start-time').val() + '-' + $('input#end-time').val() + '</td><tr>' ;
+					$('div#times fieldset table').append(temp);
+					if($('input#dates').val() == ""){
+						$('input#dates').val($('input#dates').val() + $('input#datepicker1').val() + ' ' + $('input#start-time').val() + '-' + $('input#end-time').val());
+					}else{
+						$('input#dates').val($('input#dates').val() + ',' + $('input#datepicker1').val() + ' ' + $('input#start-time').val() + '-' + $('input#end-time').val());
+					}
+				});
+            });
+		</script>
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header pull-right">
@@ -31,32 +61,74 @@
 		<div>
 			<div class="container">
 				<form class="well col-md" id="create-form" action="create_auth" method="post">
-					<div>
-						<label class="text-right text-primary pull-right">:عنوان  <a class="text-danger">*</a></label>
-						<input class="form-control text-right" name="title" type="text" placeholder="... عنوان نظر سنجی مورد نظر"></input>
-					</div>
+					<div class="control-group col-sm-10 pull-right">
+						<div class="controls">
+							<label class="text-right text-primary pull-right">:عنوان  <a class="text-danger">*</a></label>
+							<input class="form-control text-right" name="title" type="text" placeholder="... عنوان نظر سنجی مورد نظر"/>
+						</div>
+					</div><div class="clearfix"></div>
 					<br/>
-					<div>
-						<label class="text-right text-primary pull-right">:انتخاب تاریخ <a class="text-danger">*</a></label>
-						<input class="form-control" name="date" type="text" placeholder="yyyy/mm/dd hh:mm-hh:mm,..."></input>
-					</div>
+					<div class="control-group col-sm pull-right">
+						<div class="controls col-sm-4 pull-right">
+							<fieldset>
+								<legend></legend>
+								<label class="text-right text-primary pull-right">:انتخاب تاریخ <a class="text-danger">*</a></label> <br/>
+								<div class="input-group input-sm pull-right">
+									<button class="btn btn-primary btn-xs" id="add-btn">اضافه کردن</button>&nbsp;
+									<span class="input-group-btn">
+										<button id="datepicker1btn" class="btn" type="button"><i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+									<input id="datepicker1" class="form-control" type="text"/>
+								</div>
+								<div class="contorls col-sm-6 pull-right">
+									<label class="text-right text-primary pull-right">: ساعت شروع</label>
+									<input id="start-time" class="form-control" type="time"/>
+									<label class="text-right text-primary pull-right">: ساعت پایان</label>
+									<input id="end-time" class="form-control" type="time"/>
+								</div>
+							</fieldset>
+						</div>
+						<div class="col-sm-4" id="times">
+							<br/>
+							<input class="hidden" name="dates" id="dates"/>
+							<fieldset>
+								<table>
+									
+								</table>
+							</fieldset>
+						</div>
+					</div><div class="clearfix"></div>
 					<br/>
-					<div>
-						<label class="text-right text-primary pull-right">:دعوت شوندگان <a class="text-danger">*</a></label>
-						<input class="form-control" name="invited" type="text" placeholder="sample@example.com,..."></input>
-					</div>
+					<div class="control-group col-sm-10 pull-right">
+						<div class="controls">
+							<label class="text-right text-primary pull-right">:دعوت شوندگان <a class="text-danger">*</a></label>
+							<input class="form-control" name="invited" type="text" placeholder="sample@example.com,..."></input>
+						</div>
+					</div><div class="clearfix"></div>
 					<br/>
-					<div>
-						<label class="text-right text-primary pull-right">: تاریخ پایان نظر‌سنجی <a class="text-danger">*</a></label>
-						<input class="form-control" name="deadline" type="text" placeholder="yyyy/mm/dd hh:mm"></input>
-					</div>
+					<div class="control-group col-sm-4 pull-right">
+						<fieldset>
+							<legend class="text-right text-primary pull-right">:تاریخ و ساعت پایان نظر‌سنجی <a class="text-danger">*</a></legend><br/>
+							<div class="controls">
+								<div class="input-group input-sm pull-right col-sm-6">
+									<span class="input-group-btn">
+										<button id="datepicker11btn" class="btn" type="button"><i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+									<input id="datepicker11" class="form-control" name="end_vote_date" type="text"/>
+								</div>
+								<div class="contorls input-sm pull-right">
+									<input id="end-vote-time" class="form-control" name="end_vote_time" type="time"/>
+								</div>
+							</div>
+						</fieldset>
+					</div><div class="clearfix"></div>
 					</br>
-					<div class="text-right">
-						<strong>تمام دعوت شدگان</strong>&nbsp;&nbsp;<input class="" type="radio" name="numb" value="full"> <br>
-						<strong>بیشترین گزینه</strong>&nbsp;&nbsp;<input class="" type="radio" name="numb" value="max">	<br>
-						<strong>نصف و بیشتر</strong>&nbsp;&nbsp;<input class="" type="radio" name="numb" value="big_half"><br>
+					<div class="control-group text-right">
+						<strong>تمام دعوت شدگان</strong>&nbsp;&nbsp;<input class="" type="radio" name="numb" value="full"> <br/>
+						<strong>بیشترین گزینه</strong>&nbsp;&nbsp;<input class="" type="radio" name="numb" value="max">	<br/>
+						<strong>نصف و بیشتر</strong>&nbsp;&nbsp;<input class="" type="radio" name="numb" value="big_half">&nbsp;<br/>
 					</div>
-					<button class="btn btn-small btn-primary" type="submit">ایجاد</button>
+					<button class="btn btn-small btn-primary" id="create-event-btn" type="submit">ایجاد</button>
 				</form>
 			</div><div class="clearfix"></div>
 		</div>

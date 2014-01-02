@@ -14,3 +14,7 @@ a {
 .main{
   background-color: #B0B0B0;
 }
+
+#create-event-btn {
+	margin: auto 50%;
+}

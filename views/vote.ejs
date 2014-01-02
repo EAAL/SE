@@ -22,8 +22,8 @@
 					data:{ eventId : $(this).parent().attr('data-eventid') , intervalId : $(this).parent().attr('data-intid')}
 				}).done(function(msg){
 					if (msg === "ok"){
-						$('span#possible').addClass("hidden");
-						$('div#yes').prepend('<strong><lable>می‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="yes"><br/><strong><lable>ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb'+ intId + '" value="maybe"><br/><strong><lable>نمی‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="no"><br/>');
+						$('span#possible' + intId).addClass("hidden");
+						$('div#yes' + intId).prepend('<strong><lable class="text-primary">می‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="yes"><br/><strong><lable class="text-warning">ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb'+ intId + '" value="maybe"><br/><strong><lable class="text-danger">نمی‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="no"><br/>');
 					}
 				});
 			});
@@ -38,8 +38,8 @@
 					data:{ eventId : $(this).parent().attr('data-eventid') , intervalId : $(this).parent().attr('data-intid')}
 				}).done(function(msg){
 					if (msg === "ok"){
-						$('span#not-want-to').addClass("hidden");
-						$('div#maybe').prepend('<strong><lable>می‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="yes"><br/><strong><lable>ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb'+ intId + '" value="maybe"><br/><strong><lable>نمی‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="no"><br/>');
+						$('span#not-want-to' + intId).addClass("hidden");
+						$('div#maybe' + intId).prepend('<strong><lable class="text-primary">می‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="yes"><br/><strong><lable class="text-warning">ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb'+ intId + '" value="maybe"><br/><strong><lable class="text-danger">نمی‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="no"><br/>');
 					}
 				});
 
@@ -55,8 +55,8 @@
 					data:{ eventId : $(this).parent().attr('data-eventid') , intervalId : $(this).parent().attr('data-intid')}
 				}).done(function(msg){
 					if (msg === "ok"){
-						$('span#not-possible').addClass("hidden");
-						$('div#no').prepend('<strong><lable>می‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="yes"><br/><strong><lable>ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb'+ intId + '" value="maybe"><br/><strong><lable>نمی‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="no"><br/>');
+						$('span#not-possible' + intId).addClass("hidden");
+						$('div#no' + intId).prepend('<strong><lable class="text-primary">می‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="yes"><br/><strong><lable class="text-warning">ترجیحم نیست</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb'+ intId + '" value="maybe"><br/><strong><lable class="text-danger">نمی‌توانم شرکت کنم</lable></strong>&nbsp;&nbsp;<input type="radio" name="numb' + intId + '" value="no"><br/>');
 					}
 				});
 			});
@@ -77,9 +77,9 @@
 				<div class="collapse navbar-collapse pull-right">
 					<ul class="nav navbar-nav">
 						<li><a href="#">در‌باره ما</a></li>
-						<li><a href="/me">من </a></li>
+						<li class="active"><a href="/me">من </a></li>
 						<li><a href="/create">ایجاد قرار</a></li>
-						<li class="active"><a href="/">خانه </a></li>
+						<li><a href="/">خانه </a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
@@ -116,18 +116,18 @@
 						{{
 							if (votes[i].desc === 'yes'){
 						}}
-							<div class="pull-right text-right" id="yes"></div><div class="clearfix"></div>
-							<span id="possible" data-eventid="{{=id}}" data-intid="{{=votes[i].intervalId}}"><button class="btn btn-primary btn-sm pull-left" id="edit-yes">ویرایش</button><p>.میتوانم شرکت کنم</p><div class="clearfix"></div></span>
+							<div class="pull-right text-right" id="yes{{=votes[i].intervalId}}"></div><div class="clearfix"></div>
+							<span class="possible" id="possible{{=votes[i].intervalId}}" data-eventid="{{=id}}" data-intid="{{=votes[i].intervalId}}"><button class="btn btn-primary btn-sm pull-left" id="edit-yes">ویرایش</button><p>.میتوانم شرکت کنم</p><div class="clearfix"></div></span>
 						{{
 							}else if (votes[i].desc === 'maybe'){
 						}}
-							<div class="pull-right text-right" id="maybe"></div><div class="clearfix"></div>
-							<span id="not-want-to" data-eventid="{{=id}}" data-intid="{{=votes[i].intervalId}}"><button class="btn btn-warning btn-sm pull-left" id="edit-maybe">ویرایش</button><p>ترجیحم نیست</p><div class="clearfix"></div></span>
+							<div class="pull-right text-right" id="maybe{{=votes[i].intervalId}}"></div><div class="clearfix"></div>
+							<span class="not-want-to" id="not-want-to{{=votes[i].intervalId}}" data-eventid="{{=id}}" data-intid="{{=votes[i].intervalId}}"><button class="btn btn-warning btn-sm pull-left" id="edit-maybe">ویرایش</button><p>ترجیحم نیست</p><div class="clearfix"></div></span>
 						{{
 							}else{
 						}}
-							<div class="pull-right text-right" id="no"></div><div class="clearfix"></div>
-							<span id="not-possible" data-eventid="{{=id}}" data-intid="{{=votes[i].intervalId}}"><button class="btn btn-danger btn-sm pull-left" id="edit-no">ویرایش</button><p>.نمیتوانم شرکت کنم</p><div class="clearfix"></div></span>
+							<div class="pull-right text-right" id="no{{=votes[i].intervalId}}"></div><div class="clearfix"></div>
+							<span class="not-possible" id="not-possible{{=votes[i].intervalId}}" data-eventid="{{=id}}" data-intid="{{=votes[i].intervalId}}"><button class="btn btn-danger btn-sm pull-left" id="edit-no">ویرایش</button><p>.نمیتوانم شرکت کنم</p><div class="clearfix"></div></span>
 						{{
 							}
 						}}

@@ -51,8 +51,9 @@ module.exports = new function() {
 				}
 			}
 
-			db.events.update({'eventId' : id} , { $set : {'intervals' : new_intervals}});
-			return callback();
+			db.events.update({'eventId' : id} , { $set : {'intervals' : new_intervals}} , function(){
+				return callback();
+			});
 		});
 	}
 
@@ -144,4 +145,9 @@ module.exports = new function() {
 		});
 	}
 
+	this.load_title = function (email , callback){
+		db.events.find({'invited_users' : email } , function (err , data){
+			return callback(err , data);
+		});
+	}
 }

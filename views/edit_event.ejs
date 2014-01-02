@@ -10,12 +10,21 @@
 		<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 		<link href="/css/style.css" rel="stylesheet">
 		<link href="/css/stylesheet/style.css" rel="stylesheet">
-
+		<link rel="stylesheet" href="/jalali/bootstrap-datepicker.min.css"/>
+		<script src="/jalali/bootstrap-datepicker.min.js"></script>
+		<script src="/jalali/bootstrap-datepicker.fa.min.js"></script>
 	</head>
 	<script>
-		$(function(){
+		$(document).ready(function(){
 			$('div#main-div').hide();
 			$('div#main-div').slideDown(1400 ,'easeOutBounce', function(){});
+
+       		$("#datepicker1").datepicker();
+			$("#datepicker1btn").click(function(event) {
+				event.preventDefault();
+				$("#datepicker1").focus();
+			});
+
 			$('button#del').click(function(){
 				$.ajax({
 					type : 'POST',
@@ -40,7 +49,7 @@
 			});
 
 			$('button#final_add').click(function(){
-				var d = $('input#date').val();
+				var d = $('input#datepicker1').val();
 				var sTime = $('input#stime').val();
 				var eTime = $('input#etime').val();
 				$.ajax({
@@ -48,9 +57,9 @@
 					url : 'http://localhost:3000/edit_event',
 					data : {type : 'add_interval' , eventId : ($(this).attr('data-id')) , startTime : sTime , endTime : eTime , date : d} 
 				}).done(function(msg){
-					alert(msg)
+					alert(msg);
+					window.location.reload();
 				});
-				window.location.reload();
 			});
 
 			$('button#finish').click(function(){
@@ -97,22 +106,30 @@
 						}
 					}}
 					<div class="clearfix"></div>
-					<div class="pull-right hidden col-md-10" id="new_interval">
-						<div class="pull-right">
-							<div><label class="text-right text-primary pull-right">:گزینه جدید</label></div>
-							<div class="input-group pull-right">
-								<span class="input-group-btn"><button data-id="{{=event.eventId}}" id="final_add" class="btn btn-sm btn-info">ایجاد</button></span>
-								<div>
-									<input class="form-control text-right" id="date" type="text" placeholder=".... روز"/>
-								</div>
-								<div>
-									<input class="form-control text-right" id="stime" type="text" placeholder=".... ساعت شروع"/>
-								</div>
-								<div>
-									<input class="form-control text-right" id="etime" type="text" placeholder=".... ساعت پایان"/>
+					<div class="pull-right hidden col-md" id="new_interval">
+						<from class="">
+							<div class="control-group pull-right">
+								<div class="controls pull-right">
+									<fieldset>
+										<legend></legend>
+										<label class="text-right text-primary pull-right">:انتخاب تاریخ</label> <br/>
+										<div class="input-group input-sm pull-right">
+											<button class="btn btn-primary btn-xs" data-id="{{=event.eventId}}" id="final_add">اضافه کردن</button>&nbsp;
+											<span class="input-group-btn">
+												<button id="datepicker1btn" class="btn" type="button"><i class="glyphicon glyphicon-calendar"></i></button>
+											</span>
+											<input id="datepicker1" class="form-control" type="text"/>
+										</div>
+										<div class="contorls pull-right">
+											<label class="text-right text-primary pull-right">: ساعت شروع</label>
+											<input id="stime" class="form-control" type="time"/>
+											<label class="text-right text-primary pull-right">: ساعت پایان</label>
+											<input id="etime" class="form-control" type="time"/>
+										</div>
+									</fieldset>
 								</div>
 							</div>
-						</div>
+						</from>
 					</div><div class="clearfix"></div><br/><br/>
 					<div id="edit-event-buttons">
 						<button id="add" class="btn btn-info pull-right">اضافه کردن روز و ساعت جدید</button><br/><br/><br/>

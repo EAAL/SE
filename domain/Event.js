@@ -12,9 +12,20 @@ var Event=Class.extend({
 		this.stat = [];
 		this.eventId = 'Unknown';
 	},
+	constructor : function(title,owner,dead_line,policy,intervals,invited_users,nextProperIntervalIndex,stat,eventId){
+		this.title = title;
+		this.owner = owner;
+		this.dead_line = dead_line;
+		this.policy = policy;
+		this.intervals = intervals;
+		this.invited_users = invited_users;
+		this.nextProperIntervalIndex = nextProperIntervalIndex;
+		this.stat = stat;
+		this.eventId = eventId;
+	},
 	sortProperTimes : function(){
 		for(var i = 0 ; i < this.intervals.length ; i++){
-			if((this.intervals[i].allInvitedOk() == true && this.policy =='all') ||
+			if((this.intervals[i].allInvitedOk() == true && this.policy =='full') ||
 			(this.intervals[i].moreThanHalfOk() == true && this.policy == 'half') ||
 			(this.policy == 'max')){
 				this.stat.push({
@@ -34,6 +45,9 @@ var Event=Class.extend({
 		}
 		else{this.nextProperIntervalIndex-=1;}
 		return this.nextProperIntervalIndex;
+	},
+	resetNextProperTime : function(){
+		this.nextProperIntervalIndex = 'Unknown';
 	}
 	
 });

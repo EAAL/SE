@@ -120,7 +120,7 @@ module.exports = new function () {
 
 	this.reserveRoom = function(univ, eventId, callback){
 		data.loadOne_event(eventId , function(err, ev){
-			var room = univ.findRoomForEvent(ev);
+			var room = univ.findRoomForEvent(ev,callback);
 			return callback(room);
 		});
 	}

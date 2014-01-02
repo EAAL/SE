@@ -95,8 +95,20 @@ module.exports = new function() {
 
 	this.loadOne_event = function (eventId , callback){
 		db.events.findOne({'eventId' : eventId} , function (err , data){
-			console.log(data);
-			return callback(err, data);
+			//console.log(data);
+			var Event=require('../domain/Event.js');
+			var Interval=require('../domain/Interval.js');
+			var new_intervals = [];
+			for(var i=0;i<data.intervals.length;i++){
+				new_intervals.push(new Interval(data.intervals[i].votes,
+								data.intervals[i].id,
+								data.intervals[i].date,
+								data.intervals[i].startTime,
+								data.intervals[i].endTime));
+			}
+			var event = new Event(data.title,data.owner,data.dead_line,data.policy,new_intervals,
+					      data.invited_users,data.nextProperIntervalIndex,data.stat,data.eventId);
+			return callback(err, event);
 		});
 	}
 

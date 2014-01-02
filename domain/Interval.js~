@@ -2,34 +2,18 @@ Class =require('./Class.js')
 var Interval=Class.extend({
 	constructor:function(){
 		this.votes=[];
-		//this.start=-1;
-		this.id='Unknown';
 	},
-	allInvitedOk:function(){
-		for(var i=0 ; i < this.votes.length ; i++){
-			if(this.votes[i].desc == 'no')return false;
+	allInvitedOk:function{
+		for(var i=0 ; i < votes.length ; i++){
+			if(votes[i].desc != 'yes')return false;
 		}
 		return true;
 	},
-	moreThanHalfOk : function() {
+	moreThanHalfOk : function {
 		var numOk = 0;
-		for(var i=0 ; i < this.votes.length ; i++){
-			if( this.votes[i].desc == 'yes' || this.votes[i].desc == 'maybe') {
-				numOk ++;
-			}
+		for(var i=0 ; i < votes.lentgh ; i++){
+			if( votes[i].desc == 'yes') numOk ++;
 		}
-		if (numOk > (this.votes.length/2))return true;
-		return false;
-	},
-	numSpecificVotes : function (voteDesc) {
-		var num=0;
-		for(var i=0; i<this.votes.length ; i++){
-			if(this.votes[i].desc == voteDesc){
-				num++;
-			}
-		}
-		return num;
+		if (numOk)
 	}
 });
-module.exports =Interval
-

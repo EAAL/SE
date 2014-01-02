@@ -2,10 +2,11 @@ Class = require('../Utils/Class.js');
 ds = require ('../data_access/save.js');
 Room = require('../domain/Room.js');
 Event = require('../domain/Event.js');
-var University = new function () {
-	this.constructor = function () {
+Class = require('../Utils/Class.js')
+var University = Class.extend({
+	constructor : function () {
 		var me = this;
-		me.rooms = [];
+		this.rooms = [];
 		fs = require('fs');
 		fs.readFile('Rooms.JSON', 'utf8', function(err, data){
 			if(err)
@@ -16,25 +17,27 @@ var University = new function () {
 			}
 			console.log(me.rooms);
 		});
-	};
-	this.findRoomForInterval = function (interval, number) {
+	},
+	findRoomForInterval : function (interval, number) {
 		for(var i = 0; i < this.rooms.length ; i++){
-			if(this.rooms[i].isAvailable({'start' : interval.startDate, 'end':interval.endDate}, number)) return i;
+			if(this.rooms[i].isAvailable({'start' : interval.startDate, 'end':interval.endDate}, number)){
+			      return i;
+			}
 		}
 		return -1;
-	};
-	this.findRoomForEvent = function (event, cb) {
+	},
+	findRoomForEvent : function (event, cb) {
 		var a;
 		var numRoom;
-		var event_data;
-		event.prototype = Event.prototype;
+		//event.resetNextProperTime;
 		while(true){
 			a = event.retNextProperTime();
 			if(a == -1) return cb(-1);
 			numRoom = this.findRoomForInterval(event.stat[a].interval, (event.stat[a].yesVotes + event.stat[a].maybeVotes));
 			if(numRoom != -1) break;
 		}
+		//console.log('numRoom is:'+numRoom);
 		return cb(numRoom);
 	}
-};
+});
 module.exports = University;

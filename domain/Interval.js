@@ -7,6 +7,13 @@ var Interval=Class.extend({
 		this.startTime = 'Unknown';
 		this.endTime = 'Unknown';
 	},
+	constructor : function(votes,id,date,startTime,endTime){
+		this.votes = votes;
+		this.id = id;
+		this.date = date;
+		this.startTime = startTime;
+		this.endTime = endTime;
+	},
 	poll : function(vote){
 		for(v in this.votes){
 			if(v.user_id == vote.user_id){

@@ -157,8 +157,11 @@ module.exports = {
 		authenticated: false,
 		action: function (req , res) {
 			var id = parseInt(req.query.eventId , 10);
-			domain.reserveRoom(Uni, req.query.eventId/1, function (data) {
-			    res.send(data);
+			var univ = new Uni();
+			domain.reserveRoom(univ, req.query.eventId/1, function (data) {
+			    console.log(data);
+			    res.send('khar'+data);
+			    return data;
 			});
 		}
 	},

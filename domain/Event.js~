@@ -1,35 +1,8 @@
-Class = require('../Utils/Class.js')
-Utils = require('../Utils/Utils.js');
+Class = require('./Class.js')
 var Event=Class.extend({
-	constructor : function (){
-		this.policy='Unknown';
-		this.intervals=[];
-		this.invited_users=[];
-		this.nextProperIntervalIndex = 'Unknown';
-		this.stat=[];
-		this.eventId='Unknown'
+	this.policy=-1;
+	this.intervals=[];
+	this.invited_users=[];
+	this.check_proper_time : function(){
 	},
-	sortProperTimes : function(){
-		for(var i = 0 ; i < this.intervals.length ; i++){
-			if((this.intervals[i].allInvitedOk() == true && this.policy =='all') ||
-			(this.intervals[i].moreThanHalfOk() == true && this.policy == 'half') ||
-			(this.policy == 'max')){
-				this.stat.push( {'interval': this.intervals[i], 'yesVotes':this.intervals[i].numSpecificVotes('yes'), 'maybeVotes':this.intervals[i].numSpecificVotes('maybe'),
-					'noVotes' : this.intervals[i].numSpecificVotes('no')});
-			}
-		}
-		this.stat.sort(Utils.compare1);
-		this.nextProperIntervalIndex=this.stat.length-1;
-	},
-	retNextProperTime : function (){
-		if(this.nextProperIntervalIndex=='Unknown'){
-			this.sortProperTimes();
-			
-		}
-		else{this.nextProperIntervalIndex-=1;}
-		
-		return this.nextProperIntervalIndex;
-	}
-	
 });
-module.exports = Event

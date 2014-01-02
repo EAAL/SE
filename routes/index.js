@@ -44,11 +44,11 @@ module.exports = {
 		authenticated : true,
 		action : function (req, res){
 			domain.user_load(req.user.email , function (err , data){
-				if (data.eventIds == null){
+				if (data == null){
 					res.render( 'show_event' , {err : false , no_event : true});
 				}
 				else{
-					res.render( 'show_event' , {eventIds : data.eventIds , err : false , no_event : false });
+					res.render( 'show_event' , {events : data , err : false , no_event : false });
 				}
 			});
 		}
@@ -125,7 +125,7 @@ module.exports = {
 		method : 'get',
 		authenticated : true,
 		action: function (req , res) {
-			domain.loadOne_event((req.query.eventId / 1) , function (data){
+			domain.loadOne_event((req.query.eventId / 1) , function (err , data){
 				res.render('edit_event' , {event : data});
 			});
 		}

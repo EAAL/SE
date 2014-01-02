@@ -55,9 +55,16 @@ module.exports = new function () {
 	},
 
 	this.user_load = function (email , callback){
-		data.load_user(email , function (err , user){
-			console.log(user);
-			return callback(err , user);
+		var user_events = [];
+		data.load_title( email , function (err , events){
+				if (events.length == 0)
+					return callback(err , null);
+				else{
+					for (e in events){
+						user_events.push({'id' : events[e].eventId , 'title' : events[e].title});
+					}
+					return callback(err , user_events);
+				}
 		});
 	},
 
@@ -77,34 +84,34 @@ module.exports = new function () {
 		data.load_all_events(email , function(data) {
 			callback(data);
 		});
-	}
+	},
 
 	this.loadOne_event = function (eventId , callback){
-		data.loadOne_event(eventId , function(data){
-			callback(data);
+		data.loadOne_event(eventId , function (err , data){
+			callback(err , data);
 		});
-	}
+	},
 
 	this.del_interval = function (eventId , intervalId , callback){
 		data.del_interval(eventId , intervalId , function(){
 			callback();
 		});
-	}
+	},
 
 	this.delete_event = function (eventId , callback){
 		data.del_event(eventId , function(){
 			callback();
 		});
-	}
+	},
 
 	this.add_interval = function (eventId , interval , callback){
 		data.add_interval(eventId , interval , function(){
 			callback();
 		});
-	}
+	},
 
 	this.sendEmail = function(eventId , callback){
-		data.loadOne_event(eventId , function(data){
+		data.loadOne_event(eventId , function(err , data){
 			  for(var i=0;i<data.invited_users.length;i++){
 				server.send({
 				text:    "This email is sent to inform you about event:" + data.title,
@@ -116,7 +123,7 @@ module.exports = new function () {
 		  callback(data);
 
 		});
-	}
+	},
 
 	this.reserveRoom = function(univ, eventId, callback){
 		data.loadOne_event(eventId , function(err, ev){

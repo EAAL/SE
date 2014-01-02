@@ -97,7 +97,7 @@ module.exports = new function() {
 	this.loadOne_event = function (eventId , callback){
 		db.events.findOne({'eventId' : eventId} , function (err , data){
 			console.log(data);
-			return callback(err, data);
+			return callback(err , data);
 		});
 	}
 
@@ -133,4 +133,9 @@ module.exports = new function() {
 		});
 	}
 
+	this.load_title = function (email , callback){
+		db.events.find({'invited_users' : email } , function (err , data){
+			return callback(err , data);
+		});
+	}
 }

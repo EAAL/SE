@@ -18,9 +18,14 @@ var University = Class.extend({
 			console.log(me.rooms);
 		});
 	},
+	reserveRoomForInterval : function(interval , numRoom){
+		this.rooms[numRoom].reserveTimes.push({'end' : interval.endTime,'start':interval.startTime,'date':interval.date});
+		console.log('@ reserveRoomForInterval'+this.rooms[numRoom].reserveTimes[0].date);
+	},
 	findRoomForInterval : function (interval, number) {
 		for(var i = 0; i < this.rooms.length ; i++){
-			if(this.rooms[i].isAvailable({'start' : interval.startDate, 'end':interval.endDate}, number)){
+			if(this.rooms[i].isAvailable({'start' : interval.startTime, 'end':interval.endTime,'date':interval.date}, number)){
+			      this.reserveRoomForInterval(interval,i);
 			      return i;
 			}
 		}

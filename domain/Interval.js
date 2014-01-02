@@ -7,8 +7,12 @@ var Interval=Class.extend({
 		this.startTime = 'Unknown';
 		this.endTime = 'Unknown';
 	},
-	constructor : function(votes,id,date,startTime,endTime){
-		this.votes = votes;
+	constructor : function(votes, id, date, startTime, endTime){
+		if (votes == null){
+			this.votes = [];
+		}else{
+			this.votes = votes;
+		}
 		this.id = id;
 		this.date = date;
 		this.startTime = startTime;

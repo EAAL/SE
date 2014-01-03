@@ -210,5 +210,17 @@ module.exports = {
 				res.render('home' , {email : null , auth : false});
 			}
 		}
+	},
+	'/about' : {
+		method : 'get' ,
+		authenticated : false , 
+		action : function (req , res){
+			if(req.isAuthenticated()){
+				res.render('about' , {email : req.user.email , auth : true});
+			}
+			else{
+				res.render('about' , {email : null , auth : false});
+			}
+		}
 	}
 }

@@ -1,6 +1,8 @@
 domain = require('../domain/core_domain.js');
 Interval = require ('../domain/Interval.js');
 Uni = require('../domain/University.js');
+Agenda = require("agenda");
+var agenda = new Agenda({db: { address: 'localhost:27017/SE'}});
 var when = require('when');
 
 module.exports = {
@@ -29,6 +31,13 @@ module.exports = {
 				interval_id += 1;
 			}
 			domain.create(req.body.title , req.user , dates , req_invited , dead_line , policy);
+			var job = agenda.schedule(dead_line, 'run room assignment', {/**/});
+			job.save(function (err) {
+				if (err)
+					console.log("Could not save job in database!");
+				else
+					console.log("Job successfully saved!");
+			});
 			res.redirect('/success');
 		}
 	},
@@ -191,6 +200,9 @@ module.exports = {
 		method : 'get' , 
 		authenticated : false , 
 		action : function (req , res){
+			agenda.define('run room assignment', function(job, done) {
+				//TODO call the assignment function
+			});
 			if(req.isAuthenticated()){
 				res.render('home' , {email : req.user.email , auth : true});
 			}

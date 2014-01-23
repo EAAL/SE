@@ -36,13 +36,18 @@
 				$(this).parent().addClass('hidden')
 			});
 			$('button#del_event').click(function(){
-				$.ajax({
-					type : 'POST',
-					url : 'http://localhost:3000/edit_event',
-					data : {type : 'del_event' , eventId : ($(this).attr('data-id'))} 
-				}).done(function(msg){
+				var r = confirm("آیا مطمئن هستید ؟");
+				if ( r == true){
+					$.ajax({
+						type : 'POST',
+						url : 'http://localhost:3000/edit_event',
+						data : {type : 'del_event' , eventId : ($(this).attr('data-id'))} 
+					}).done(function(msg){
+						window.location.href = "/";
+					});
+				}else{
 
-				});
+				}
 			});
 			$('button#add').click(function(){
 				$('div#new_interval').removeClass('hidden');

@@ -1,6 +1,7 @@
 domain = require('../domain/core_domain.js');
 Interval = require ('../domain/Interval.js');
 Uni = require('../domain/University.js');
+var calendar = require('../Utils/calendar.js');
 Agenda = require("agenda");
 var agenda = new Agenda({db: { address: 'localhost:27017/SE'}});
 var when = require('when');
@@ -13,13 +14,25 @@ module.exports = {
 			var dates = [];
 			var req_dates = req.body.dates.split(/[,;]/g);
 			var req_invited = req.body.invited.split(/[,;]/g);
+
 			console.log(req.body);
+			/*----------------------------------------------*/
 			var dead_line_date = req.body.end_vote_date;
+			var temp_date = dead_line_date.split('/');
 			var dead_line_time = req.body.end_vote_time;
-			var dead_line = dead_line_date + ' ' + dead_line_time;
+			var temp_time = dead_line_time.split(':');
+
+			var time_number = calendar.persian_to_jd(temp_date[2]/1 , temp_date[1]/1 , temp_date[0]/1);
+			var miladi = calendar.jd_to_gregorian(time_number);
+			var dead_line = new Date(miladi[0]/1 , (miladi[1] / 1) - 1 , miladi[2]/1 , temp_time[0]/1 , temp_time[1]/1);
+			console.log(dead_line);
+			/*----------------------------------------------*/
 			var policy = req.body.numb;
+
 			console.log(req.body.numb);
 			var interval_id = 1;
+
+
 			for (date in req_dates){
 				var temp = new Interval();
 				var a = req_dates[date].split(" ");
@@ -30,15 +43,21 @@ module.exports = {
 				dates.push(temp);
 				interval_id += 1;
 			}
-			domain.create(req.body.title , req.user , dates , req_invited , dead_line , policy);
-			var job = agenda.schedule(dead_line, 'run room assignment', {/**/});
-			job.save(function (err) {
-				if (err)
-					console.log("Could not save job in database!");
-				else
-					console.log("Job successfully saved!");
+			domain.create(req.body.title , req.user , dates , req_invited , dead_line , policy , function (id){
+				var job = agenda.schedule(dead_line.toString(), 'run room assignment', {eventId : id});
+				job.save(function (err) {
+					if (err)
+						console.log("Could not save job in database!");
+					else{
+						console.log("Job successfully saved!");
+						console.log(dead_line);
+					}
+				});
+				setTimeout(function(){
+					job.run();
+				} , (dead_line - Date.now()));
+				res.redirect('/success');
 			});
-			res.redirect('/success');
 		}
 	},
 	'/create' : {
@@ -189,7 +208,7 @@ module.exports = {
 		method: 'get',
 		authenticated: true,
 		action: function (req, res, next) {
-			if(req.user.email == 'aryaz.egh@gmail.com') {
+			if(req.user.email == 'mohammad.nsr@gmail.com') {
 				res.render('admin');
 			}
 			else
@@ -201,7 +220,13 @@ module.exports = {
 		authenticated : false , 
 		action : function (req , res){
 			agenda.define('run room assignment', function(job, done) {
-				//TODO call the assignment function
+				var id = job.attrs.data.eventId;
+				var univ = new Uni();
+				domain.reserveRoom(univ, id/1, function (data) {
+				    console.log(data);
+				    res.send('khar');
+				    return data;
+				});
 			});
 			if(req.isAuthenticated()){
 				res.render('home' , {email : req.user.email , auth : true});

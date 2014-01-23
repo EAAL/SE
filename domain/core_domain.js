@@ -13,7 +13,7 @@ var server  = email.server.connect({
 });
 module.exports = new function () {
 
-	this.create = function (title , owner , intervals, invited , deadLine , policy){
+	this.create = function (title , owner , intervals, invited , deadLine , policy , cb){
 		var new_event = new Event();
 		new_event.title = title;
 		new_event.owner = owner.email;
@@ -28,6 +28,7 @@ module.exports = new function () {
 				data.add_user_eventId(invited[u] , cnt + 1 );
 			}
 			data.saveEvent(new_event);
+			cb(cnt + 1);
 		});
 	},
 
@@ -127,8 +128,14 @@ module.exports = new function () {
 
 	this.reserveRoom = function(univ, eventId, callback){
 		data.loadOne_event(eventId , function(err, ev){
-			var room = univ.findRoomForEvent(ev,callback);
-			return callback(room);
+			if(err != null) {
+				var room = univ.findRoomForEvent(ev,callback);
+				return callback(room);
+			}
+			else {
+				var room = univ.findRoomForEvent(ev,callback);
+				return callback(room);
+			}
 		});
 	}
 }
